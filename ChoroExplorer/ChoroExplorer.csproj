@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Fluxor" Version="5.7.0" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+    <PackageReference Include="Mapsui.Wpf" Version="3.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
@@ -25,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Facts\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 

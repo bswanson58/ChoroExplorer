@@ -5,16 +5,14 @@ namespace ChoroExplorer.Platform {
         public string       ApplicationName { get; }
         public string       CompanyName { get; }
         public string       ConfigurationDirectory { get; }
-        public string       DatabaseDirectory { get; }
-        public string       PictureStorageDirectory { get; }
+        public string       FactDirectory { get; }
         public string       LogFileDirectory { get; }
 
         public ApplicationConstants() {
             ApplicationName = "ChoroExplorer";
             CompanyName = "Secret Squirrel Software";
             ConfigurationDirectory = "Configuration";
-            DatabaseDirectory = "Database";
-            PictureStorageDirectory = "Picture Cache";
+            FactDirectory = "Facts";
             LogFileDirectory = "Logs";
         }
     }

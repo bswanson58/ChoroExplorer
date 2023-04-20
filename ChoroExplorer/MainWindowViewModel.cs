@@ -13,6 +13,7 @@ using ChoroExplorer.Platform;
 namespace ChoroExplorer {
     // ReSharper disable once ClassNeverInstantiated.Global
     internal class MainWindowViewModel : PropertyChangeBase, IHandle<Events.DisplayExplorerRequest> {
+        private readonly IAppStartup    mAppStartup;
         private readonly IDialogService mDialogService;
         private readonly IPreferences   mPreferences;
         private readonly IBasicLog      mLog;
@@ -21,7 +22,8 @@ namespace ChoroExplorer {
         public  ICommand                Configuration { get; }
 
         public MainWindowViewModel( IDialogService dialogService, IEventAggregator eventAggregator, 
-                                    IPreferences preferences, IBasicLog log ) {
+                                    IPreferences preferences, IBasicLog log, IAppStartup appStartup ) {
+            mAppStartup = appStartup;
             mDialogService = dialogService;
             mPreferences = preferences;
             mLog = log;
@@ -53,20 +55,24 @@ namespace ChoroExplorer {
             mShell = shell;
 
             mShell.Closing += OnShellClosing;
-        }
 
+            mAppStartup.StartApplication();
+        }
 
         private void OnShellClosing( object ? sender, System.ComponentModel.CancelEventArgs e ) {
             if( mShell != null ) {
                 mShell.Closing -= OnShellClosing;
             }
-        }
 
+            mAppStartup.StopApplication();
+        }
+        /*
         private void ActivateShell() {
             if( mShell != null ) {
                 mShell.Show();
                 mShell.Activate();
             }
         }
+        */
     }
 }

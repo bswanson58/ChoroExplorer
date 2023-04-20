@@ -6,11 +6,9 @@ namespace ReusableBits.Platform.Preferences {
         string      EnvironmentName();
 
         string		ApplicationDirectory();
-        string      DatabaseDirectory();
-        string      DatabaseName();
         string		LogFileDirectory();
-        string      PictureDirectory();
         string		PreferencesDirectory();
+        string      FactsDirectory();
     }
 
     public class OperatingEnvironment : IEnvironment {
@@ -24,8 +22,6 @@ namespace ReusableBits.Platform.Preferences {
 
         public string EnvironmentName() => Environment.MachineName;
 
-        public string DatabaseName() => "Mushroom.Db";
-
         public string ApplicationDirectory() {
             var retValue = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ),
                 mApplicationConstants.CompanyName,
@@ -38,18 +34,8 @@ namespace ReusableBits.Platform.Preferences {
             return( retValue );
         }
 
-        public string DatabaseDirectory() {
-            var retValue = Path.Combine( ApplicationDirectory(), mApplicationConstants.DatabaseDirectory );
-
-            if(!Directory.Exists( retValue )) {
-                Directory.CreateDirectory( retValue );
-            }
-
-            return( retValue );
-        }
-
-        public string PictureDirectory() {
-            var retValue = Path.Combine( ApplicationDirectory(), mApplicationConstants.PictureStorageDirectory );
+        public string FactsDirectory() {
+            var retValue = Path.Combine( ApplicationDirectory(), mApplicationConstants.FactDirectory );
 
             if(!Directory.Exists( retValue )) {
                 Directory.CreateDirectory( retValue );

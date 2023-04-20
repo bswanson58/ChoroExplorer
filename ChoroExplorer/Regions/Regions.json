@@ -1,0 +1,204 @@
+{
+  "regions": [
+    {
+      "regionId": "AL",
+      "regionName": "Alabama"
+    },
+    {
+      "regionId": "AK",
+      "regionName": "Alaska"
+    },
+    {
+      "regionId": "AZ",
+      "regionName": "Arizona"
+    },
+    {
+      "regionId": "AR",
+      "regionName": "Arkansas"
+    },
+    {
+      "regionId": "CA",
+      "regionName": "California"
+    },
+    {
+      "regionId": "CO",
+      "regionName": "Colorado"
+    },
+    {
+      "regionId": "CT",
+      "regionName": "Connecticut"
+    },
+    {
+      "regionId": "DE",
+      "regionName": "Delaware"
+    },
+    {
+      "regionId": "FL",
+      "regionName": "Florida"
+    },
+    {
+      "regionId": "GA",
+      "regionName": "Georgia"
+    },
+    {
+      "regionId": "HI",
+      "regionName": "Hawaii"
+    },
+    {
+      "regionId": "ID",
+      "regionName": "Idaho"
+    },
+    {
+      "regionId": "IL",
+      "regionName": "Illinois"
+    },
+    {
+      "regionId": "IN",
+      "regionName": "Indiana"
+    },
+    {
+      "regionId": "IA",
+      "regionName": "Iowa"
+    },
+    {
+      "regionId": "KS",
+      "regionName": "Kansas"
+    },
+    {
+      "regionId": "KY",
+      "regionName": "Kentucky"
+    },
+    {
+      "regionId": "LA",
+      "regionName": "Louisiana"
+    },
+    {
+      "regionId": "ME",
+      "regionName": "Maine"
+    },
+    {
+      "regionId": "MD",
+      "regionName": "Maryland"
+    },
+    {
+      "regionId": "MA",
+      "regionName": "Massachusetts"
+    },
+    {
+      "regionId": "MI",
+      "regionName": "Michigan"
+    },
+    {
+      "regionId": "MN",
+      "regionName": "Minnesota"
+    },
+    {
+      "regionId": "MS",
+      "regionName": "Mississippi"
+    },
+    {
+      "regionId": "MO",
+      "regionName": "Missouri"
+    },
+    {
+      "regionId": "MT",
+      "regionName": "Montana"
+    },
+    {
+      "regionId": "NE",
+      "regionName": "Nebraska"
+    },
+    {
+      "regionId": "NV",
+      "regionName": "Nevada"
+    },
+    {
+      "regionId": "NH",
+      "regionName": "New Hampshire"
+    },
+    {
+      "regionId": "NJ",
+      "regionName": "New Jersey"
+    },
+    {
+      "regionId": "NM",
+      "regionName": "New Mexico"
+    },
+    {
+      "regionId": "NY",
+      "regionName": "New York"
+    },
+    {
+      "regionId": "NC",
+      "regionName": "North Carolina"
+    },
+    {
+      "regionId": "ND",
+      "regionName": "North Dakota"
+    },
+    {
+      "regionId": "OH",
+      "regionName": "Ohio"
+    },
+    {
+      "regionId": "OK",
+      "regionName": "Oklahoma"
+    },
+    {
+      "regionId": "OR",
+      "regionName": "Oregon"
+    },
+    {
+      "regionId": "PA",
+      "regionName": "Pennsylvania"
+    },
+    {
+      "regionId": "RI",
+      "regionName": "Rhode Island"
+    },
+    {
+      "regionId": "SC",
+      "regionName": "South Carolina"
+    },
+    {
+      "regionId": "SD",
+      "regionName": "South Dakota"
+    },
+    {
+      "regionId": "TN",
+      "regionName": "Tennessee"
+    },
+    {
+      "regionId": "TX",
+      "regionName": "Texas"
+    },
+    {
+      "regionId": "UT",
+      "regionName": "Utah"
+    },
+    {
+      "regionId": "VT",
+      "regionName": "Vermont"
+    },
+    {
+      "regionId": "VA",
+      "regionName": "Virginia"
+    },
+    {
+      "regionId": "WA",
+      "regionName": "Washington"
+    },
+    {
+      "regionId": "WV",
+      "regionName": "West Virginia"
+    },
+    {
+      "regionId": "WI",
+      "regionName": "Wisconsin"
+    },
+    {
+      "regionId": "WY",
+      "regionName": "Wyoming"
+    }
+  ]
+}

@@ -8,7 +8,9 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
+using ChoroExplorer.Models;
 using ChoroExplorer.Platform;
+using ChoroExplorer.Regions;
 using Fluxor;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -61,6 +63,11 @@ namespace ChoroExplorer {
         }
     
         private static void ConfigureServices( IServiceCollection services ) {
+            services.AddSingleton<IAppStartup, AppStartup>();
+            services.AddSingleton<IMapManager, MapManager>();
+
+            services.AddScoped<IRegionsFacade, RegionsFacade>();
+
             services.AddScoped<IBasicLog, SeriLogAdapter>();
 
             services.AddScoped<IApplicationConstants, ApplicationConstants>();
