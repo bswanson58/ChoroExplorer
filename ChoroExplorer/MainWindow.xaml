@@ -1,12 +1,28 @@
-﻿<Window x:Class="ChoroExplorer.MainWindow"
+﻿<mah:MetroWindow x:Class="ChoroExplorer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ChoroExplorer"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:viewModelLocator="clr-namespace:ReusableBits.Wpf.ViewModelLocator;assembly=ReusableBits.Wpf"
+        xmlns:choroExplorer="clr-namespace:ChoroExplorer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="ChoroExplorer"
+        ResizeMode="CanResizeWithGrip"
+        GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+        WindowStartupLocation="CenterScreen"
+        viewModelLocator:ViewModelLocator.AutoWireViewModel="True"
+        d:DataContext="{d:DesignInstance choroExplorer:MainWindowViewModel, IsDesignTimeCreatable=False}"
+        Height="600" Width="1200">
+
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button Command="{Binding Configuration}" Content="{StaticResource Path_Configure}" Padding="7" 
+                    ToolTip="Configuration"/>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
     <Grid>
 
     </Grid>
-</Window>
+</mah:MetroWindow>

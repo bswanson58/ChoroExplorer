@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <DataTemplate x:Key="HorizontalSeparator">
+        <Grid Width="2" Background="{StaticResource ControlTextColor}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="VerticalSeparator">
+        <Grid Height="2" Background="{StaticResource ControlTextColor}"/>
+    </DataTemplate>
+</ResourceDictionary>
