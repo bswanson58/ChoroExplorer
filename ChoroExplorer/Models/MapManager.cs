@@ -10,8 +10,11 @@ using System.Linq;
 
 namespace ChoroExplorer.Models {
     internal interface IMapManager {
-        void ConfigureRegionLayers( IEnumerable<RegionShape> regions );
-        void RefreshMap();
+        Map     Map { get; }
+
+        void    ConfigureRegionLayers( IEnumerable<RegionShape> regions );
+        void    CenterMap();
+        void    RefreshMap();
     }
 
     internal class MapManager : IMapManager {
@@ -21,8 +24,12 @@ namespace ChoroExplorer.Models {
             Map = new Map();
             Map.Layers.Add( OpenStreetMap.CreateTileLayer());
 
+            CenterMap();
+        }
+
+        public void CenterMap() {
             var center = SphericalMercator.FromLonLat( -98, 39 ); // rough center of the contiguous states.
-            Map.Home = n => n.NavigateTo( center, Map.Resolutions[5] );
+            Map.Home = n => n.NavigateTo( center, Map.Resolutions[5]);
         }
 
         public void RefreshMap() {
@@ -51,7 +58,7 @@ namespace ChoroExplorer.Models {
                 retValue.Add( new Layer( regionShape.Name ) {
                     DataSource = new MemoryProvider( polyList ),
                     Style = new VectorStyle {
-                        Fill = new Brush( new Color( 150, 150, 30, 64 )),
+                        Fill = new Brush( new Color( 0, 0, 0, 16 )),
                         Outline = new Pen {
                             Color = Color.Orange,
                             Width = 2,

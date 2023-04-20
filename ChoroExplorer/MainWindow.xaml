@@ -7,6 +7,7 @@
         xmlns:viewModelLocator="clr-namespace:ReusableBits.Wpf.ViewModelLocator;assembly=ReusableBits.Wpf"
         xmlns:choroExplorer="clr-namespace:ChoroExplorer"
         xmlns:statusBar="clr-namespace:ChoroExplorer.StatusBar"
+        xmlns:mapDisplay="clr-namespace:ChoroExplorer.MapDisplay"
         mc:Ignorable="d"
         Title="ChoroExplorer"
         ResizeMode="CanResizeWithGrip"
@@ -28,6 +29,8 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+
+        <mapDisplay:MapView Grid.Row="0"/>
 
         <statusBar:StatusView Grid.Row="1"/>
     </Grid>
