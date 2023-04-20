@@ -6,6 +6,7 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModelLocator="clr-namespace:ReusableBits.Wpf.ViewModelLocator;assembly=ReusableBits.Wpf"
         xmlns:choroExplorer="clr-namespace:ChoroExplorer"
+        xmlns:statusBar="clr-namespace:ChoroExplorer.StatusBar"
         mc:Ignorable="d"
         Title="ChoroExplorer"
         ResizeMode="CanResizeWithGrip"
@@ -23,6 +24,11 @@
     </mah:MetroWindow.RightWindowCommands>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <statusBar:StatusView Grid.Row="1"/>
     </Grid>
 </mah:MetroWindow>
