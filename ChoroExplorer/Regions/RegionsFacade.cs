@@ -13,7 +13,7 @@ namespace ChoroExplorer.Regions {
         }
 
         public void InitializeRegions() {
-            mDispatcher.Dispatch( new LoadRegions());
+            mDispatcher.Dispatch( new LoadRegionsAction());
         }
     }
 }

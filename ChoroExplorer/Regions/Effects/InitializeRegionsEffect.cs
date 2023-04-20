@@ -7,7 +7,7 @@ using ReusableBits.Platform.Preferences;
 
 namespace ChoroExplorer.Regions.Effects {
     // ReSharper disable once UnusedType.Global
-    internal class InitializeRegionsEffect : Effect<LoadRegions> {
+    internal class InitializeRegionsEffect : Effect<InitializeRegionsAction> {
         private readonly IEnvironment                       mEnvironment;
         private readonly ILogger<InitializeRegionsEffect>   mLogger;
 
@@ -16,12 +16,12 @@ namespace ChoroExplorer.Regions.Effects {
             mEnvironment = environment;
         }
 
-        public override Task HandleAsync( LoadRegions _, IDispatcher dispatcher ) {
+        public override Task HandleAsync( InitializeRegionsAction _, IDispatcher dispatcher ) {
             try {
-                var regionPath = Path.Combine( mEnvironment.FactsDirectory(), "Regions.json" );
-                var regions = RegionLoader.LoadRegions( regionPath );
+                var regionPath = Path.Combine( mEnvironment.FactsDirectory(), "StateShapes.xml" );
+                var stateShapes = ShapeLoader.LoadShapes( regionPath );
 
-                dispatcher.Dispatch( new InitializeRegions( regions ));
+                dispatcher.Dispatch( new ConfigureRegionShapesAction( stateShapes ));
             }
             catch( Exception ex ) {
                 mLogger.LogError( ex, String.Empty );

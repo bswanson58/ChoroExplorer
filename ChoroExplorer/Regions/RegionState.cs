@@ -19,7 +19,7 @@ namespace ChoroExplorer.Regions {
     // ReSharper disable once UnusedType.Global
     internal static class RegionReducers {
         [ReducerMethod]
-        public static RegionState InitializeRegions( RegionState state, InitializeRegions action ) =>
+        public static RegionState InitializeRegions( RegionState state, InitializeRegionsAction action ) =>
             new( action.Regions );
     }
 }
