@@ -6,6 +6,11 @@ namespace ChoroExplorer.Facts {
         void    LoadFacts();
         void    AddFact( FactData fact );
         void    UpdateFact( FactData fact );
+
+        void    LoadFactSets();
+        void    UpdateFactSet( FactSet factSet );
+
+        void    SetCurrentFactSet( FactSet factSet );
     }
 
     internal class FactsFacade : IFactsFacade {
@@ -25,6 +30,18 @@ namespace ChoroExplorer.Facts {
 
         public void UpdateFact( FactData fact ) {
             mDispatcher.Dispatch( new UpdateFactAction( fact ));
+        }
+
+        public void LoadFactSets() {
+            mDispatcher.Dispatch( new LoadFactSetsAction());
+        }
+
+        public void UpdateFactSet( FactSet factSet ) {
+            mDispatcher.Dispatch( new UpdateFactSetAction( factSet ));
+        } 
+
+        public void SetCurrentFactSet( FactSet factSet ) {
+            mDispatcher.Dispatch( new SetCurrentFactSetAction( factSet ));
         }
     }
 }

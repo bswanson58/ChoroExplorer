@@ -58,23 +58,25 @@ namespace ChoroExplorer.Models {
             Weight = 0.0D;
             Enabled = false;
         }
+
+        [JsonConstructor]
+        public FactParameters( string factId, double weight, bool enabled ) {
+            FactId = factId;
+            Weight = weight;
+            Enabled = enabled;
+        }
     }
 
     internal class FactSet {
-        public  string                  FactId { get; }
-        public  FactData                Data { get; }
-        public  FactParameters          Parameters { get; }
+        public  string                  SetId { get; }
+        public  string                  SetName { get; }
+        public  List<FactParameters>    Facts { get; }
 
-        public FactSet() {
-            FactId = NCuid.Cuid.Generate();
-            Data = new FactData();
-            Parameters = new FactParameters();
-        }
-
-        public FactSet( FactData factData ) {
-            FactId = factData.FactId;
-            Data = factData;
-            Parameters = new FactParameters();
+        [JsonConstructor]
+        public FactSet( string setId, string setName, List<FactParameters> facts ) {
+            SetId = setId;
+            SetName = setName;
+            Facts = new List<FactParameters>();
         }
     }
 

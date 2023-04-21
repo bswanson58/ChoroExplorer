@@ -13,6 +13,19 @@ using ReusableBits.Wpf.DialogService;
 using ReusableBits.Wpf.ViewModelSupport;
 
 namespace ChoroExplorer.Facts.FactList {
+    internal class FactViewModel {
+        public  FactData        Data { get; }
+        public  FactParameters  Parameters { get; }
+
+        public  string          FactKey => Data.FactKey;
+        public  string          FactName => Data.FactName;
+
+        public FactViewModel( FactData data ) {
+            Data = data;
+            Parameters = new FactParameters();
+        }
+    }
+
     // ReSharper disable once ClassNeverInstantiated.Global
     internal class FactListViewModel : PropertyChangeBase {
         private readonly IDialogService             mDialogService;
@@ -20,12 +33,14 @@ namespace ChoroExplorer.Facts.FactList {
         private readonly IState<FactState>          mFactState;
         private readonly IFactsFacade               mFactsFacade;
         private readonly ILogger<FactListViewModel> mLogger;
+        private FactSet ?                           mCurrentFactSet;
 
-        public  ObservableCollection<FactSet>       Facts { get; }
+        public  ObservableCollection<FactViewModel> Facts { get; }
+        public  ObservableCollection<FactSet>       FactSets { get; }
 
         public  ICommand                            AddFact { get; }
-        public  DelegateCommand<FactSet>            EditFact { get; }
-        public  DelegateCommand<FactSet>            DeleteFact {  get; }
+        public  DelegateCommand<FactViewModel>      EditFact { get; }
+        public  DelegateCommand<FactViewModel>      DeleteFact {  get; }
 
         public FactListViewModel( IDialogService dialogService, IFactsFacade factsFacade, IState<FactState> factState,
                                   IEnvironment environment, ILogger<FactListViewModel> logger ) {
@@ -35,14 +50,29 @@ namespace ChoroExplorer.Facts.FactList {
             mFactState = factState;
             mFactsFacade = factsFacade;
 
-            Facts = new ObservableCollection<FactSet>();
+            mCurrentFactSet = null;
+
+            Facts = new ObservableCollection<FactViewModel>();
+            FactSets = new ObservableCollection<FactSet>();
             mFactState.StateChanged += OnFactStateChanged;
 
             AddFact = new DelegateCommand( OnAddFact );
-            EditFact = new DelegateCommand<FactSet>( OnEditFact );
-            DeleteFact = new DelegateCommand<FactSet>( OnDeleteFact );
+            EditFact = new DelegateCommand<FactViewModel>( OnEditFact );
+            DeleteFact = new DelegateCommand<FactViewModel>( OnDeleteFact );
 
             LoadFacts();
+            LoadFactSets();
+        }
+
+        public FactSet ? CurrentFactSet {
+            get => mCurrentFactSet;
+            set {
+                mCurrentFactSet = value;
+
+                if( value != null ) {
+                    mFactsFacade.SetCurrentFactSet( value );
+                }
+            }
         }
 
         private void OnFactStateChanged( object ? sender, EventArgs e ) {
@@ -70,7 +100,7 @@ namespace ChoroExplorer.Facts.FactList {
             });
         }
 
-        private void OnEditFact( FactSet ? factSet ) {
+        private void OnEditFact( FactViewModel ? factSet ) {
             if( factSet != null ) {
                 var parameters = new DialogParameters{{ FactEditorViewModel.cFactData, factSet.Data }};
 
@@ -95,13 +125,21 @@ namespace ChoroExplorer.Facts.FactList {
             }
         }
 
-        private void OnDeleteFact( FactSet ? factSet ) { }
+        private void OnDeleteFact( FactViewModel ? factSet ) { }
 
         private void LoadFacts() {
             Facts.Clear();
 
             foreach( var fact in mFactState.Value.Facts ) {
-                Facts.Add( new FactSet( fact ));
+                Facts.Add( new FactViewModel( fact ));
+            }
+        }
+
+        private void LoadFactSets() {
+            FactSets.Clear();
+
+            foreach( var factSet in mFactState.Value.FactSets ) {
+                FactSets.Add( factSet );
             }
         }
     }

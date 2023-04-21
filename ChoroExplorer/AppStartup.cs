@@ -19,6 +19,7 @@ namespace ChoroExplorer {
         public void StartApplication() {
             mRegionsFacade.InitializeRegions();
             mFactsFacade.LoadFacts();
+            mFactsFacade.LoadFactSets();
         }
 
         public void StopApplication() {
