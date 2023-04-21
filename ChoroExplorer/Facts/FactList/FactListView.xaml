@@ -13,16 +13,37 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="FactSetTemplate" DataType="{x:Type models:FactSet}">
-            <Grid>
+            <Grid x:Name="GroupContainer">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Column="1" Style="{StaticResource ListViewTextStyle}" Text="{Binding Data.FactKey}"/>
-                <TextBlock Grid.Column="2" Style="{StaticResource ListViewTextStyle}" Text="{Binding Data.FactName}"/>
+                <TextBlock Grid.Column="1" Style="{StaticResource ListViewTextStyle}" VerticalAlignment="Center"
+                           Text="{Binding Data.FactKey}"/>
+                <TextBlock Grid.Column="2" Style="{StaticResource ListViewTextStyle}" VerticalAlignment="Center"
+                           Text="{Binding Data.FactName}"/>
+
+                <StackPanel x:Name="GroupControls" Grid.Column="3" Margin="3" Orientation="Horizontal" 
+                            Opacity="0" HorizontalAlignment="Right" VerticalAlignment="Center" ZIndex="10">
+                    <Button Padding="4" BorderThickness="0" Height="25" Width="30" Background="Transparent" Focusable="False"
+                            Content="{StaticResource Path_Edit}" ToolTip="Edit Lighting Group" CommandParameter="{Binding}"
+                            Command="{Binding DataContext.EditFact, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                    <Button Padding="4" BorderThickness="0" Height="25" Width="30" Background="Transparent" Focusable="False"
+                            Content="{StaticResource Path_Delete}" ToolTip="Delete Lighting Group" CommandParameter="{Binding}"
+                            Command="{Binding DataContext.DeleteFact, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                </StackPanel>
+
             </Grid>
+
+            <DataTemplate.Triggers>
+                <Trigger SourceName="GroupContainer" Property="IsMouseOver" Value="True">
+                    <Setter TargetName="GroupControls" Property="Opacity" Value="0.7"/>
+                    <Setter TargetName="GroupContainer" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}"/>
+                </Trigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
     </UserControl.Resources>
 

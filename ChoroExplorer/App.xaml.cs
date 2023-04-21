@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
+using ChoroExplorer.Facts;
 using ChoroExplorer.Models;
 using ChoroExplorer.Platform;
 using ChoroExplorer.Regions;
@@ -66,6 +67,7 @@ namespace ChoroExplorer {
             services.AddSingleton<IAppStartup, AppStartup>();
             services.AddSingleton<IMapManager, MapManager>();
 
+            services.AddScoped<IFactsFacade, FactsFacade>();
             services.AddScoped<IRegionsFacade, RegionsFacade>();
 
             services.AddScoped<IBasicLog, SeriLogAdapter>();
