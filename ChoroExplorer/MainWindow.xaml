@@ -8,6 +8,7 @@
         xmlns:choroExplorer="clr-namespace:ChoroExplorer"
         xmlns:statusBar="clr-namespace:ChoroExplorer.StatusBar"
         xmlns:mapDisplay="clr-namespace:ChoroExplorer.MapDisplay"
+        xmlns:factList="clr-namespace:ChoroExplorer.Facts.FactList"
         mc:Ignorable="d"
         Title="ChoroExplorer"
         ResizeMode="CanResizeWithGrip"
@@ -30,7 +31,15 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <mapDisplay:MapView Grid.Row="0"/>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+
+            <mapDisplay:MapView Grid.Column="0"/>
+            <factList:FactListView Grid.Column="1"/>
+        </Grid>
 
         <statusBar:StatusView Grid.Row="1"/>
     </Grid>
