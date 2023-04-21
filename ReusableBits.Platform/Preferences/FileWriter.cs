@@ -39,7 +39,8 @@ namespace ReusableBits.Platform.Preferences {
     public static class JsonObjectSerializer {
         public static  void Write<T>( string path, T item ) {
             if(!Equals( item, default( T ))) {
-                var	json = JsonSerializer.Serialize( item );
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                var	json = JsonSerializer.Serialize( item, options );
 
                 if(( String.IsNullOrWhiteSpace( json )) ||
                    ( json.Length < 5 )) {
@@ -55,7 +56,7 @@ namespace ReusableBits.Platform.Preferences {
 
         public static T ? Read<T>( string path ) {
             var retValue = default( T );
-            var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
             if( File.Exists( path )) {
                 using( var file = File.OpenText( path )) {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
 using ChoroExplorer.Facts.FactEditor;
@@ -17,14 +18,20 @@ namespace ChoroExplorer.Facts.FactList {
         private readonly IEnvironment               mEnvironment;
         private readonly ILogger<FactListViewModel> mLogger;
 
-        public  ICommand    AddFact { get; }
+        public  ObservableCollection<FactSet>       Facts { get; }
+
+        public  ICommand                            AddFact { get; }
 
         public FactListViewModel( IDialogService dialogService, IEnvironment environment, ILogger<FactListViewModel> logger ) {
             mDialogService = dialogService;
             mEnvironment = environment;
             mLogger = logger;
 
+            Facts = new ObservableCollection<FactSet>();
+
             AddFact = new DelegateCommand( OnAddFact );
+
+            LoadFacts();
         }
 
         private void OnAddFact() {
@@ -38,6 +45,8 @@ namespace ChoroExplorer.Facts.FactList {
                                 Path.Combine( mEnvironment.FactsDirectory(), factData.FactId ), ChoroConstants.FactExtension );
 
                             FactLoader.SaveFact( factData, factPath );
+
+                            LoadFacts();
                         }
                     }
                     catch( Exception ex ) {
@@ -45,6 +54,23 @@ namespace ChoroExplorer.Facts.FactList {
                     }
                 }
             });
+        }
+
+        private void LoadFacts() {
+            Facts.Clear();
+
+            try {
+                var factFiles = Directory.EnumerateFiles( mEnvironment.FactsDirectory(), $"*{ChoroConstants.FactExtension}" );
+
+                foreach( var factFile in factFiles ) {
+                    var factData = FactLoader.LoadFact( factFile );
+
+                    Facts.Add( new FactSet( factData ));
+                }
+            }
+            catch( Exception ex ) {
+                mLogger.LogError( ex, String.Empty );
+            }
         }
     }
 }

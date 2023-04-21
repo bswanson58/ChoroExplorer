@@ -5,10 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChoroExplorer.Facts.FactList"
              xmlns:viewModelLocator="clr-namespace:ReusableBits.Wpf.ViewModelLocator;assembly=ReusableBits.Wpf"
+             xmlns:models="clr-namespace:ChoroExplorer.Models"
              viewModelLocator:ViewModelLocator.AutoWireViewModel="True"
              d:DataContext="{d:DesignInstance local:FactListViewModel, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="FactSetTemplate" DataType="{x:Type models:FactSet}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="1" Style="{StaticResource ListViewTextStyle}" Text="{Binding Data.FactKey}"/>
+                <TextBlock Grid.Column="2" Style="{StaticResource ListViewTextStyle}" Text="{Binding Data.FactName}"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -17,5 +33,7 @@
         </Grid.RowDefinitions>
 
         <Button Grid.Row="0" HorizontalAlignment="Right" Margin="5" Content="New Fact" Command="{Binding AddFact}"/>
+
+        <ListView Grid.Row="1" ItemTemplate="{StaticResource FactSetTemplate}" ItemsSource="{Binding Facts}"></ListView>
     </Grid>
 </UserControl>

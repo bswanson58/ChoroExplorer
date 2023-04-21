@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace ChoroExplorer.Models {
     internal class FactValue {
@@ -11,6 +12,7 @@ namespace ChoroExplorer.Models {
             Value = 0.0D;
         }
 
+        [JsonConstructor]
         public FactValue( string regionId, double value ) {
             RegionId = regionId;
             Value = value;
@@ -34,6 +36,7 @@ namespace ChoroExplorer.Models {
             RegionFacts = new List<FactValue>();
         }
 
+        [JsonConstructor]
         public FactData( string factId, string factKey, string factName, string description, string source, 
                          List<FactValue> regionFacts ) {
             FactId = factId;
@@ -65,6 +68,12 @@ namespace ChoroExplorer.Models {
         public FactSet() {
             FactId = NCuid.Cuid.Generate();
             Data = new FactData();
+            Parameters = new FactParameters();
+        }
+
+        public FactSet( FactData factData ) {
+            FactId = factData.FactId;
+            Data = factData;
             Parameters = new FactParameters();
         }
     }
