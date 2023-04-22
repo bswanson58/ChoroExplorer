@@ -50,21 +50,27 @@ namespace ChoroExplorer.Models {
 
     internal class FactParameters {
         public  string                  FactId { get; }
-        public  double                  Weight { get; }
+        public  int                     Weight { get; }
         public  bool                    Enabled { get; }
 
-        public FactParameters() {
-            FactId = NCuid.Cuid.Generate();
-            Weight = 0.0D;
+        public FactParameters( FactData forData ) {
+            FactId = forData.FactId;
+            Weight = 1;
             Enabled = false;
         }
 
         [JsonConstructor]
-        public FactParameters( string factId, double weight, bool enabled ) {
+        public FactParameters( string factId, int weight, bool enabled ) {
             FactId = factId;
             Weight = weight;
             Enabled = enabled;
         }
+
+        public FactParameters With( bool enabledState ) =>
+            new FactParameters( FactId, Weight, enabledState );
+
+        public FactParameters With( int weight ) =>
+            new FactParameters( FactId, weight, Enabled );
     }
 
     internal class FactSet {
@@ -76,8 +82,17 @@ namespace ChoroExplorer.Models {
         public FactSet( string setId, string setName, List<FactParameters> facts ) {
             SetId = setId;
             SetName = setName;
-            Facts = new List<FactParameters>();
+            Facts = facts;
         }
+
+        public FactSet With( string setName ) =>
+            new FactSet( SetId, setName, Facts );
+
+        public FactSet With( IEnumerable<FactParameters> parameters ) =>
+            new FactSet( SetId, SetName, new List<FactParameters>( parameters ));
+
+        public static FactSet UnnamedSet =>
+            new FactSet( NCuid.Cuid.Generate(), "Unnamed", new List<FactParameters>());
     }
 
     internal class RegionScore {

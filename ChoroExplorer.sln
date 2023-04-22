@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReusableBits.Platform", "Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReusableBits.Wpf", "ReusableBits.Wpf\ReusableBits.Wpf.csproj", "{82D83623-8407-42AD-99D7-A106E6757C28}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fluxor.Selectors", "Fluxor.Selectors\Fluxor.Selectors.csproj", "{E2505264-F2EE-45ED-8556-16AFA7DA0010}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{82D83623-8407-42AD-99D7-A106E6757C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82D83623-8407-42AD-99D7-A106E6757C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82D83623-8407-42AD-99D7-A106E6757C28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2505264-F2EE-45ED-8556-16AFA7DA0010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2505264-F2EE-45ED-8556-16AFA7DA0010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2505264-F2EE-45ED-8556-16AFA7DA0010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2505264-F2EE-45ED-8556-16AFA7DA0010}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

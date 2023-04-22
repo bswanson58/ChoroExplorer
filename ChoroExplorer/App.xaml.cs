@@ -68,6 +68,7 @@ namespace ChoroExplorer {
             services.AddSingleton<IMapManager, MapManager>();
 
             services.AddScoped<IFactsFacade, FactsFacade>();
+            services.AddScoped<IFactSelectors, FactSelectors>();
             services.AddScoped<IRegionsFacade, RegionsFacade>();
 
             services.AddScoped<IBasicLog, SeriLogAdapter>();

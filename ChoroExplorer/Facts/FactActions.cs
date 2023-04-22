@@ -11,6 +11,14 @@ namespace ChoroExplorer.Facts {
         }
     }
 
+    internal class PopulateFactAction {
+        public  FactData    Fact { get; }
+
+        public PopulateFactAction( FactData fact ) {
+            Fact = fact;
+        }
+    }
+
     internal class UpdateFactAction {
         public  FactData    Fact { get; }
 
@@ -29,6 +37,14 @@ namespace ChoroExplorer.Facts {
         }
     }
 
+    internal class PopulateFactSetAction {
+        public  FactSet     FactSet { get; }
+
+        public PopulateFactSetAction( FactSet factSet ) {
+            FactSet = factSet;
+        }
+    }
+
     internal class UpdateFactSetAction {
         public  FactSet     FactSet { get; }
 
@@ -42,6 +58,14 @@ namespace ChoroExplorer.Facts {
 
         public SetCurrentFactSetAction( FactSet factSet ) {
             FactSetId = factSet.SetId;
+        }
+    }
+
+    internal class InitializeCurrentFactSetAction {
+        public  string  FactSetId { get; }
+
+        public InitializeCurrentFactSetAction( string factSetId ) {
+            FactSetId = factSetId;
         }
     }
 }

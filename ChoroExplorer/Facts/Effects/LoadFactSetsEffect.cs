@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using ReusableBits.Platform.Preferences;
 using System.IO;
 using System.Threading.Tasks;
+using ChoroExplorer.Models;
 
 namespace ChoroExplorer.Facts.Effects {
     // ReSharper disable once UnusedType.Global
@@ -20,13 +21,20 @@ namespace ChoroExplorer.Facts.Effects {
         public override Task HandleAsync( LoadFactSetsAction action, IDispatcher dispatcher ) {
             try {
                 var factFiles = Directory.EnumerateFiles( mEnvironment.FactsDirectory(), $"*{ChoroConstants.FactSetExtension}" );
+                var haveFactSets = false;
 
                 foreach( var factFile in factFiles ) {
                     var factSet = FactSetLoader.LoadFactSet( factFile );
 
                     if( factSet != null ) {
-                        dispatcher.Dispatch( new AddFactSetAction( factSet ));
+                        dispatcher.Dispatch( new PopulateFactSetAction( factSet ));
+
+                        haveFactSets = true;
                     }
+                }
+
+                if(!haveFactSets ) {
+                    dispatcher.Dispatch( new AddFactSetAction( FactSet.UnnamedSet ));
                 }
             }
             catch( Exception ex ) {

@@ -24,7 +24,7 @@ namespace ChoroExplorer.Facts.Effects {
                 foreach( var factFile in factFiles ) {
                     var factData = FactLoader.LoadFact( factFile );
 
-                    dispatcher.Dispatch( new AddFactAction( factData ));
+                    dispatcher.Dispatch( new PopulateFactAction( factData ));
                 }
             }
             catch( Exception ex ) {
