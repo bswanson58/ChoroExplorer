@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="ChoroExplorer.MapDisplay.MapControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ChoroExplorer.MapDisplay"
+             xmlns:viewModelLocator="clr-namespace:ReusableBits.Wpf.ViewModelLocator;assembly=ReusableBits.Wpf"
+             mc:Ignorable="d" 
+             viewModelLocator:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance local:MapControlViewModel, IsDesignTimeCreatable=False}"
+             d:DesignHeight="50" d:DesignWidth="200">
+
+    <Grid>
+        <Slider Margin="5" Style="{DynamicResource MahApps.Styles.Slider}"
+                Minimum="0" Maximum="255" Value="{Binding RegionColorTransparency}"/>
+    </Grid>
+</UserControl>
