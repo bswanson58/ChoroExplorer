@@ -12,11 +12,14 @@ namespace ChoroExplorer {
     internal class AppStartup : IAppStartup {
         private readonly IFactsFacade       mFactsFacade;
         private readonly IRegionsFacade     mRegionsFacade;
+        private readonly IFactEngine        mFactEngine;
         private readonly IPreferences       mPreferences;
 
-        public AppStartup( IRegionsFacade regionsFacade, IFactsFacade factsFacade, IPreferences preferences ) {
+        public AppStartup( IRegionsFacade regionsFacade, IFactsFacade factsFacade, IFactEngine factEngine,
+                           IPreferences preferences ) {
             mRegionsFacade = regionsFacade;
             mFactsFacade = factsFacade;
+            mFactEngine = factEngine;
             mPreferences = preferences;
         }
 
@@ -29,9 +32,12 @@ namespace ChoroExplorer {
 
             mFactsFacade.LoadFacts();
             mFactsFacade.LoadFactSets();
+
+            mFactEngine.StartFactEngine();
         }
 
         public void StopApplication() {
+            mFactEngine.StopFactEngine();
         }
     }
 }

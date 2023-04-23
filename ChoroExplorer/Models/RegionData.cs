@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Diagnostics;
 using System.Text.Json.Serialization;
-using Mapsui.Geometries;
 
 namespace ChoroExplorer.Models {
+    [DebuggerDisplay("Region:{RegionName}")]
     internal class RegionData {
         public  string          RegionId { get; }
         public  string          RegionName { get; }
@@ -12,10 +12,5 @@ namespace ChoroExplorer.Models {
             RegionId = regionId;
             RegionName = regionName;
         }
-    }
-
-    internal class RegionShapeData {
-        public  string          RegionId { get; }
-        public  List<Point>     ShapeData { get; }
     }
 }

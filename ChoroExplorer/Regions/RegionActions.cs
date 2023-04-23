@@ -20,4 +20,12 @@ namespace ChoroExplorer.Regions {
             RegionShapes = new List<RegionShape>( regionShapes );
         }
     }
+
+    internal class UpdateRegionScoresAction {
+        public  IReadOnlyList<RegionSummary> Scores { get; }
+
+        public UpdateRegionScoresAction( IReadOnlyList<RegionSummary> scores ) {
+            Scores = scores;
+        }
+    }
 }

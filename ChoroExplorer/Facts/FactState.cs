@@ -71,6 +71,7 @@ namespace ChoroExplorer.Facts {
     internal interface IFactSelectors {
         ISelectorSubscription<IReadOnlyList<FactSet>>     FactSetsSelector();
         ISelectorSubscription<IReadOnlyList<FactData>>    FactsSelector();
+        ISelectorSubscription<string>                     CurrentFactSelector();
     }
 
     internal class FactSelectors : IFactSelectors {
@@ -87,5 +88,8 @@ namespace ChoroExplorer.Facts {
 
         public ISelectorSubscription<IReadOnlyList<FactData>> FactsSelector() =>
             mStore.SubscribeSelector( SelectorFactory.CreateSelector( mFactStateSelector, state => state.Facts ));
+
+        public ISelectorSubscription<string> CurrentFactSelector() =>
+            mStore.SubscribeSelector( SelectorFactory.CreateSelector( mFactStateSelector, state => state.CurrentFactSet ));
     }
 }

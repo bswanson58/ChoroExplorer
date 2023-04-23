@@ -70,6 +70,9 @@ namespace ChoroExplorer {
             services.AddScoped<IFactsFacade, FactsFacade>();
             services.AddScoped<IFactSelectors, FactSelectors>();
             services.AddScoped<IRegionsFacade, RegionsFacade>();
+            services.AddScoped<IRegionSelectors, RegionSelectors>();
+
+            services.AddScoped<IFactEngine, FactEngine>();
 
             services.AddScoped<IBasicLog, SeriLogAdapter>();
 
