@@ -5,12 +5,16 @@ using System.Windows.Media;
 
 namespace ChoroExplorer.ColorMapping {
     internal interface IColorMapper {
+        GradientStopCollection  MappingColors { get; }
+
         Color MapColor( double value );
         Color MapColor( double value, byte alpha );
     }
 
     internal class ColorMapper : IColorMapper {
         private readonly GradientStopCollection mGradientStops;
+
+        public  GradientStopCollection MappingColors => mGradientStops;
 
         public ColorMapper() {
             mGradientStops = new GradientStopCollection {

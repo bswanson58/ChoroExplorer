@@ -51,7 +51,8 @@ namespace ChoroExplorer.Regions {
     // Selectors
 
     internal interface IRegionSelectors {
-        ISelectorSubscription<IReadOnlyList<RegionData>>  RegionsSelector();
+        ISelectorSubscription<IReadOnlyList<RegionData>>    RegionsSelector();
+        ISelectorSubscription<IReadOnlyList<RegionColor>>   RegionColorsSelector();
     }
 
     internal class RegionSelectors : IRegionSelectors {
@@ -66,5 +67,7 @@ namespace ChoroExplorer.Regions {
         public ISelectorSubscription<IReadOnlyList<RegionData>> RegionsSelector() =>
             mStore.SubscribeSelector( SelectorFactory.CreateSelector( mRegionStateSelector, state => state.Regions ));
 
+        public ISelectorSubscription<IReadOnlyList<RegionColor>> RegionColorsSelector() =>
+            mStore.SubscribeSelector( SelectorFactory.CreateSelector( mRegionStateSelector, state => state.RegionColors ));
     }
 }
