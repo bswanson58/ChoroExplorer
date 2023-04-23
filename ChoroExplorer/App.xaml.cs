@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
+using ChoroExplorer.ColorMapping;
 using ChoroExplorer.Facts;
 using ChoroExplorer.Models;
 using ChoroExplorer.Platform;
@@ -72,6 +73,7 @@ namespace ChoroExplorer {
             services.AddScoped<IRegionsFacade, RegionsFacade>();
             services.AddScoped<IRegionSelectors, RegionSelectors>();
 
+            services.AddScoped<IColorMapper, ColorMapper>();
             services.AddScoped<IFactEngine, FactEngine>();
 
             services.AddScoped<IBasicLog, SeriLogAdapter>();

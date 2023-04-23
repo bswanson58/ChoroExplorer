@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ChoroExplorer.Models;
 
 namespace ChoroExplorer.Regions {
@@ -26,6 +27,22 @@ namespace ChoroExplorer.Regions {
 
         public UpdateRegionScoresAction( IReadOnlyList<RegionSummary> scores ) {
             Scores = scores;
+        }
+    }
+
+    internal class UpdateRegionColorsAction {
+        public  IReadOnlyList<RegionColor>  RegionColors { get; }
+
+        public UpdateRegionColorsAction( IReadOnlyList<RegionColor> regionColors ) {
+            RegionColors = regionColors;
+        }
+    }
+
+    internal class SetRegionColorTransparencyAction {
+        public  int ColorTransparency { get; }
+
+        public SetRegionColorTransparencyAction( int colorTransparency ) {
+            ColorTransparency = Math.Min( 255, Math.Max( 0, colorTransparency ));
         }
     }
 }

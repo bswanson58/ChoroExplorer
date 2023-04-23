@@ -27,6 +27,7 @@ namespace ChoroExplorer {
             var preferences = mPreferences.Load<ChoroPreferences>();
 
             mFactsFacade.InitializeCurrentFactSet( preferences.CurrentFactSet );
+            mRegionsFacade.SetRegionColorTransparency( preferences.RegionColorTransparency );
 
             mRegionsFacade.InitializeRegions();
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json.Serialization;
+using System.Windows.Media;
 
 namespace ChoroExplorer.Models {
     internal class FactValue {
@@ -154,6 +155,16 @@ namespace ChoroExplorer.Models {
             RegionName = regionName;
             RegionScore = regionScore;
             FactScores = factScores;
+        }
+    }
+
+    internal class RegionColor {
+        public  string      RegionName {  get; }
+        public  Color       Color { get; }
+
+        public RegionColor( string regionName, Color color ) {
+            RegionName = regionName;
+            Color = color;
         }
     }
 }

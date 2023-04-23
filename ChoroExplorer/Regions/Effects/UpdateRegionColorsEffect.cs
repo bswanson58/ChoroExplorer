@@ -4,15 +4,15 @@ using Fluxor;
 
 namespace ChoroExplorer.Regions.Effects {
     // ReSharper disable once UnusedType.Global
-    internal class UpdateRegionSummariesEffect : Effect<UpdateRegionScoresAction> {
+    internal class UpdateRegionColorsEffect : Effect<UpdateRegionColorsAction> {
         private readonly IMapManager    mMapManager;
 
-        public UpdateRegionSummariesEffect( IMapManager mapManager ) {
+        public UpdateRegionColorsEffect( IMapManager mapManager ) {
             mMapManager = mapManager;
         }
 
-        public override Task HandleAsync( UpdateRegionScoresAction action, IDispatcher dispatcher ) {
-            mMapManager.UpdateRegions( action.Scores );
+        public override Task HandleAsync( UpdateRegionColorsAction action, IDispatcher dispatcher ) {
+            mMapManager.UpdateRegionColors( action.RegionColors );
 
             return Task.CompletedTask;
         }

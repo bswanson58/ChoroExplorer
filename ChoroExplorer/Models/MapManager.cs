@@ -16,7 +16,7 @@ namespace ChoroExplorer.Models {
         void    CenterMap();
         void    RefreshMap();
 
-        void    UpdateRegions( IReadOnlyList<RegionSummary> regions );
+        void    UpdateRegionColors( IReadOnlyList<RegionColor> regions );
     }
 
     internal class MapManager : IMapManager {
@@ -74,14 +74,14 @@ namespace ChoroExplorer.Models {
             return retValue;
         }
 
-        public void UpdateRegions( IReadOnlyList<RegionSummary> regions ) {
+        public void UpdateRegionColors( IReadOnlyList<RegionColor> regions ) {
             foreach( var region in regions ) {
-                var colorPart = (int)( 255 * region.RegionScore );
-                var color = new Color( 40, colorPart, 120, 128 );
                 var layer = Map.Layers.FindLayer( region.RegionName ).FirstOrDefault();
 
                 if( layer?.Style is VectorStyle style ) {
-                    style.Fill = new Brush( color );
+                    var mapColor = new Color( region.Color.R, region.Color.G, region.Color.B, region.Color.A );
+
+                    style.Fill = new Brush( mapColor );
 
                     layer.DataHasChanged();
                 }

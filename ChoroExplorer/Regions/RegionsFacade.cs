@@ -6,6 +6,7 @@ namespace ChoroExplorer.Regions {
     internal interface IRegionsFacade {
         void    InitializeRegions();
         void    UpdateRegionScores( IReadOnlyList<RegionSummary> scores );
+        void    SetRegionColorTransparency( int transparency );
     }
 
     internal class RegionsFacade : IRegionsFacade {
@@ -21,6 +22,10 @@ namespace ChoroExplorer.Regions {
 
         public void UpdateRegionScores( IReadOnlyList<RegionSummary> scores ) {
             mDispatcher.Dispatch( new UpdateRegionScoresAction( scores ));
+        }
+
+        public void SetRegionColorTransparency( int transparency ) {
+            mDispatcher.Dispatch( new SetRegionColorTransparencyAction( transparency ));
         }
     }
 }
