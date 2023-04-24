@@ -1,4 +1,5 @@
 ﻿using ChoroExplorer.Facts;
+using ChoroExplorer.Filters;
 using ChoroExplorer.Models;
 using ChoroExplorer.Regions;
 using ReusableBits.Platform.Preferences;
@@ -11,14 +12,16 @@ namespace ChoroExplorer {
 
     internal class AppStartup : IAppStartup {
         private readonly IFactsFacade       mFactsFacade;
+        private readonly IFiltersFacade     mFiltersFacade;
         private readonly IRegionsFacade     mRegionsFacade;
         private readonly IFactEngine        mFactEngine;
         private readonly IPreferences       mPreferences;
 
-        public AppStartup( IRegionsFacade regionsFacade, IFactsFacade factsFacade, IFactEngine factEngine,
-                           IPreferences preferences ) {
+        public AppStartup( IRegionsFacade regionsFacade, IFactsFacade factsFacade, IFiltersFacade filtersFacade,
+                           IFactEngine factEngine, IPreferences preferences ) {
             mRegionsFacade = regionsFacade;
             mFactsFacade = factsFacade;
+            mFiltersFacade = filtersFacade;
             mFactEngine = factEngine;
             mPreferences = preferences;
         }
@@ -32,6 +35,7 @@ namespace ChoroExplorer {
             mRegionsFacade.InitializeRegions();
 
             mFactsFacade.LoadFacts();
+            mFiltersFacade.LoadFilters();
             mFactsFacade.LoadFactSets();
 
             mFactEngine.StartFactEngine();

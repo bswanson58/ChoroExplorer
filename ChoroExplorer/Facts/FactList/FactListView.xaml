@@ -17,7 +17,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
@@ -36,6 +36,42 @@
                     <Button Padding="4" BorderThickness="0" Height="25" Width="30" Background="Transparent" Focusable="False"
                             Content="{StaticResource Path_Delete}" ToolTip="Delete Lighting Group" CommandParameter="{Binding}"
                             Command="{Binding DataContext.DeleteFact, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                </StackPanel>
+
+            </Grid>
+
+            <DataTemplate.Triggers>
+                <Trigger SourceName="GroupContainer" Property="IsMouseOver" Value="True">
+                    <Setter TargetName="GroupControls" Property="Opacity" Value="0.7"/>
+                    <Setter TargetName="GroupContainer" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}"/>
+                </Trigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+
+        <DataTemplate x:Key="FilterTemplate" DataType="{x:Type local:FilterViewModel}">
+            <Grid x:Name="GroupContainer">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Grid.Column="0" IsChecked="{Binding IsEnabled}"/>
+
+                <TextBlock Grid.Column="1" Style="{StaticResource ListViewTextStyle}" VerticalAlignment="Center"
+                           Text="{Binding FilterKey}"/>
+                <TextBlock Grid.Column="2" Style="{StaticResource ListViewTextStyle}" VerticalAlignment="Center"
+                           Text="{Binding FilterName}"/>
+
+                <StackPanel x:Name="GroupControls" Grid.Column="3" Margin="3" Orientation="Horizontal" 
+                            Opacity="0" HorizontalAlignment="Right" VerticalAlignment="Center" ZIndex="10">
+                    <Button Padding="4" BorderThickness="0" Height="25" Width="30" Background="Transparent" Focusable="False"
+                            Content="{StaticResource Path_Edit}" ToolTip="Edit Lighting Group" CommandParameter="{Binding}"
+                            Command="{Binding DataContext.EditFilter, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+                    <Button Padding="4" BorderThickness="0" Height="25" Width="30" Background="Transparent" Focusable="False"
+                            Content="{StaticResource Path_Delete}" ToolTip="Delete Lighting Group" CommandParameter="{Binding}"
+                            Command="{Binding DataContext.DeleteFilter, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                 </StackPanel>
 
             </Grid>
@@ -79,10 +115,36 @@
                     Content="{StaticResource Path_Edit}" Command="{Binding EditFactSet}" ToolTip="Edit the fact set name"/>
         </Grid>
 
-        <Label Grid.Row="2" Style="{StaticResource LabelStyle}" Content="Facts:"/>
+        <ScrollViewer Grid.Row="2">
+            <StackPanel Orientation="Vertical">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
 
-        <ListView Grid.Row="3" ItemTemplate="{StaticResource FactTemplate}" ItemsSource="{Binding Facts}"></ListView>
+                    <Label Grid.Column="0" Style="{StaticResource LabelStyle}" VerticalAlignment="Bottom" Content="Facts:"/>
+                    <Button Grid.Column="2" HorizontalAlignment="Right" Margin="5" Content="New Fact" Command="{Binding AddFact}"/>
+                </Grid>
 
-        <Button Grid.Row="4" HorizontalAlignment="Right" Margin="5" Content="New Fact" Command="{Binding AddFact}"/>
+                <ListView ItemTemplate="{StaticResource FactTemplate}" ItemsSource="{Binding Facts}"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="0" Style="{StaticResource LabelStyle}" VerticalAlignment="Bottom" Content="Filters:"/>
+                    <Button Grid.Column="2" HorizontalAlignment="Right" Margin="5" Content="New Filter" Command="{Binding AddFilter}"/>
+                </Grid>
+
+                <ListView ItemTemplate="{StaticResource FilterTemplate}" ItemsSource="{Binding Filters}"/>
+            </StackPanel>
+        </ScrollViewer>
+
+
     </Grid>
 </UserControl>

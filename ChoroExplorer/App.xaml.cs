@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using ChoroExplorer.ColorMapping;
 using ChoroExplorer.Facts;
+using ChoroExplorer.Filters;
 using ChoroExplorer.Models;
 using ChoroExplorer.Platform;
 using ChoroExplorer.Regions;
@@ -70,6 +71,7 @@ namespace ChoroExplorer {
 
             services.AddScoped<IFactsFacade, FactsFacade>();
             services.AddScoped<IFactSelectors, FactSelectors>();
+            services.AddScoped<IFiltersFacade, FiltersFacade>();
             services.AddScoped<IRegionsFacade, RegionsFacade>();
             services.AddScoped<IRegionSelectors, RegionSelectors>();
 
