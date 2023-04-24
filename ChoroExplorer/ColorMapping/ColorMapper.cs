@@ -7,8 +7,9 @@ namespace ChoroExplorer.ColorMapping {
     internal interface IColorMapper {
         GradientStopCollection  MappingColors { get; }
 
-        Color MapColor( double value );
-        Color MapColor( double value, byte alpha );
+        Color   MapColor( double value );
+        Color   MapColor( double value, byte alpha );
+        Color   DisabledRegionColor( byte alpha );
     }
 
     internal class ColorMapper : IColorMapper {
@@ -32,6 +33,9 @@ namespace ChoroExplorer.ColorMapping {
 
             return new Color { R = color.R, G = color.G, B = color.B, A = alpha };
         }
+
+        public Color DisabledRegionColor( byte alpha ) =>
+            new Color { R = 128, G = 128, B = 128, A = alpha };
 
         private static Color GetColorByOffset( GradientStopCollection collection, double offset ) {
             var stops = collection.OrderBy(x => x.Offset).ToArray();

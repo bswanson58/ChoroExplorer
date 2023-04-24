@@ -20,8 +20,10 @@ namespace ChoroExplorer.Regions.Effects {
 
             foreach( var region in action.Scores ) {
                 regionColors.Add( 
-                    new RegionColor( region.RegionName, 
-                        mColorMapper.MapColor( region.RegionScore, (byte)mRegionState.Value.RegionColorTransparency )));
+                    new RegionColor( region.RegionName,
+                        region.Enabled ?
+                            mColorMapper.MapColor( region.RegionScore, (byte)mRegionState.Value.RegionColorTransparency ) :
+                            mColorMapper.DisabledRegionColor((byte)mRegionState.Value.RegionColorTransparency )));
             }
 
             dispatcher.Dispatch( new UpdateRegionColorsAction( regionColors ));

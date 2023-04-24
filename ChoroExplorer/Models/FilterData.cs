@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text.Json.Serialization;
 
 namespace ChoroExplorer.Models {
+    [DebuggerDisplay("FilterValue:{RegionId}")]
     internal class FilterValue {
         public  string      RegionId { get; }
         public  bool        Enabled { get; }

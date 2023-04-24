@@ -20,21 +20,32 @@ namespace ChoroExplorer.Models {
         public  string  FactId { get; }
         public  string  RegionId { get; }
         public  double  Score { get; }
+        public  bool    Enabled { get; }
 
         public RegionFactScore( string factId, string regionId, double score ) {
             FactId = factId;
             RegionId = regionId;
             Score = Math.Max( 0.0, Math.Min( 1.0, score ));
+            Enabled = true;
+        }
+
+        public RegionFactScore( string factId, string regionId ) {
+            FactId = factId;
+            RegionId = regionId;
+            Score = 0.0D;
+            Enabled = false;
         }
     }
 
     internal class RegionScore {
         public  string  RegionId { get; }
         public  double  Score { get; }
+        public  bool    Enabled { get; }
 
-        public RegionScore( string regionId, double score ) {
+        public RegionScore( string regionId, double score, bool enabled ) {
             RegionId = regionId;
             Score = Math.Max( 0.0, Math.Min( 1.0, score ));
+            Enabled = enabled;
         }
     }
 
@@ -53,12 +64,15 @@ namespace ChoroExplorer.Models {
         public  string              RegionId { get; }
         public  string              RegionName {  get; }
         public  double              RegionScore { get; }
+        public  bool                Enabled { get; }
         public  IList<FactScore>    FactScores { get; }
 
-        public RegionSummary( string regionId, string regionName, double regionScore, IList<FactScore> factScores ) {
+        public RegionSummary( string regionId, string regionName, double regionScore, bool enabled,
+                              IList<FactScore> factScores ) {
             RegionId = regionId;
             RegionName = regionName;
             RegionScore = regionScore;
+            Enabled = enabled;
             FactScores = factScores;
         }
     }

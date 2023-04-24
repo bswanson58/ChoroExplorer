@@ -18,6 +18,7 @@ namespace ChoroExplorer.Facts {
 
         private ISelectorSubscription<IReadOnlyList<RegionData>> ?  mRegionsSelector;
         private ISelectorSubscription<IReadOnlyList<FactSet>> ?     mFactSetsSelector;
+        private ISelectorSubscription<IReadOnlyList<FilterData>> ?  mFiltersSelector;
         private ISelectorSubscription<IReadOnlyList<FactData>> ?    mFactsSelector;
         private ISelectorSubscription<String> ?                     mCurrentFactsSelector;
 
@@ -32,6 +33,8 @@ namespace ChoroExplorer.Facts {
             mFactsSelector.StateChanged += OnFactsChanged;
             mFactSetsSelector = mFactSelectors.FactSetsSelector();
             mFactSetsSelector.StateChanged += OnFactSetsChanged;
+            mFiltersSelector = mFactSelectors.FiltersSelector();
+            mFiltersSelector.StateChanged += OnFiltersChanged;
             mCurrentFactsSelector = mFactSelectors.CurrentFactSelector();
             mCurrentFactsSelector.StateChanged += OnCurrentFactChanged;
 
@@ -42,6 +45,9 @@ namespace ChoroExplorer.Facts {
         public void StopFactEngine() {
             if( mFactsSelector != null ) {
                 mFactsSelector.StateChanged -= OnFactsChanged;
+            }
+            if( mFiltersSelector != null ) {
+                mFiltersSelector.StateChanged -= OnFiltersChanged;
             }
             if( mFactSetsSelector != null ) {
                 mFactSetsSelector.StateChanged -= OnFactSetsChanged;
@@ -70,16 +76,22 @@ namespace ChoroExplorer.Facts {
             UpdateRegionScores();
         }
 
+        private void OnFiltersChanged( object ? sender, EventArgs e ) {
+            UpdateRegionScores();
+        }
+
         private void UpdateRegionScores() {
             if(( mFactSetsSelector != null ) &&
                ( mFactsSelector != null ) &&
+               ( mFiltersSelector != null ) &&
                ( mRegionsSelector != null ) &&
                (!String.IsNullOrWhiteSpace( mCurrentFactsSelector?.Value ))) {
                 var factSet = mFactSetsSelector.Value.FirstOrDefault( s => s.SetId.Equals( mCurrentFactsSelector.Value ));
 
                 if( factSet != null ) {
+                    var filters = CombineFilters( factSet.Filters ).ToList();
                     var regionSummaries = new List<RegionSummary>();
-                    var regionFactScores = CalculateFactScores( factSet );
+                    var regionFactScores = CalculateFactScores( factSet, filters );
                     var regionScores = CollateRegionScores( regionFactScores );
 
                     foreach( var region in regionScores ) {
@@ -92,7 +104,8 @@ namespace ChoroExplorer.Facts {
                                 .ToList();
 
                             regionSummaries.Add( 
-                                new RegionSummary( regionDetail.RegionId, regionDetail.RegionName, region.Score, scores ));
+                                new RegionSummary( regionDetail.RegionId, regionDetail.RegionName, 
+                                                   region.Score, region.Enabled, scores ));
                         }
                     }
 
@@ -101,31 +114,83 @@ namespace ChoroExplorer.Facts {
             }
         }
 
+        private IEnumerable<FilterValue> CombineFilters( IList<FilterParameters> filterParameters ) {
+            if( mFiltersSelector != null ) {
+                var filterList = SelectFilters( filterParameters ).ToList();
+
+                if( filterList.Any()) {
+                    var filters = filterList.First().RegionFilters;
+
+                    if( filterList.Count > 1 ) {
+                        foreach( var filter in filterList.Skip( 1 )) {
+                            filters = CombineFilters( filters, filter.RegionFilters ).ToList();
+                        }
+                    }
+
+                    return filters;
+                }
+            }
+
+            return Enumerable.Empty<FilterValue>();
+        }
+
+        private IEnumerable<FilterData> SelectFilters( IList<FilterParameters> filterParameters ) =>
+            from parameter in filterParameters
+            join filter in mFiltersSelector!.Value
+                on parameter.FilterId equals filter.FilterId
+            select filter;
+
+        private IEnumerable<FilterValue> CombineFilters( IEnumerable<FilterValue> filter1, IEnumerable<FilterValue> filter2 ) =>
+                from f1 in filter1
+                join f2 in filter2
+                    on f1.RegionId equals f2.RegionId
+                select new FilterValue( f1.RegionId, f1.Enabled && f2.Enabled );
+
         private IList<RegionScore> CollateRegionScores( IList<RegionFactScore> scores ) =>
             scores
                 .GroupBy( s => s.RegionId )
-                .Select( g => new RegionScore( g.Key, g.Sum( v => v.Score )))
+                .Select( g => new RegionScore( g.Key, g.Sum( v => v.Score ), g.First().Enabled ))
                 .ToList();
 
-        private IList<RegionFactScore> CalculateFactScores( FactSet factSet ) {
+        private IList<RegionFactScore> CalculateFactScores( FactSet factSet, IList<FilterValue> filters ) {
             var scores = new List<RegionFactScore>();
 
             if( mFactsSelector != null ) {
-                var activeIds = factSet.Facts.Select( f => f.FactId ).ToList();
-                var activeFacts = mFactsSelector.Value.Where( f => activeIds.Contains( f.FactId )).ToList();
+                var activeFacts = CollectFacts( factSet.Facts ).ToList();
 
                 foreach( var fact in activeFacts ) {
+                    var enabledRegions = 
+                        filters.Any() ? SelectEnabledRegions( fact.RegionFacts, filters ).ToList() : fact.RegionFacts;
                     var factContext = 
-                        new FactContext( fact.FactId, fact.RegionFacts.Min( f => f.Value ), fact.RegionFacts.Max( f => f.Value ));
+                        new FactContext( fact.FactId, enabledRegions.Min( f => f.Value ), enabledRegions.Max( f => f.Value ));
 
-                    foreach( var region in fact.RegionFacts ) {
+                    foreach( var region in enabledRegions ) {
                         scores.Add( CalculateFactValue( factContext, region ));
+                    }
+
+                    // Add in disabled regions
+                    foreach( var region in filters.Where( f => !f.Enabled )) {
+                        scores.Add( new RegionFactScore( fact.FactId, region.RegionId ));
                     }
                 }
             }
 
             return scores;
         }
+
+        private IEnumerable<FactData> CollectFacts( IEnumerable<FactParameters> factParameters ) =>
+            from parameter in factParameters
+            join fact in mFactsSelector!.Value
+                on parameter.FactId equals fact.FactId
+            select fact;
+
+        private IEnumerable<FactValue> SelectEnabledRegions( IEnumerable<FactValue> regions, IEnumerable<FilterValue> filters ) =>
+            from filter in filters
+            join region in regions
+                on filter.RegionId equals region.RegionId
+            where filter.Enabled
+            select region;
+        
 
         private RegionFactScore CalculateFactValue( FactContext context, FactValue value ) {
             var factRange = context.MaximumFactValue - context.MinimumFactValue;
