@@ -63,8 +63,8 @@ namespace ChoroExplorer.Models {
                         Fill = new Brush( new Color( 0, 0, 0, 16 )),
                         Outline = new Pen {
                             Color = Color.Orange,
-                            Width = 2,
-                            PenStyle = PenStyle.DashDotDot,
+                            Width = 1,
+                            PenStyle = PenStyle.Solid,
                             PenStrokeCap = PenStrokeCap.Round
                         }
                     }

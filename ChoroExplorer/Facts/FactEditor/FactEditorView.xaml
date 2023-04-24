@@ -43,6 +43,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="8"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}" HorizontalAlignment="Right"
@@ -62,6 +64,12 @@
             <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource LabelStyle}" HorizontalAlignment="Right"
                    Content="Source:"/>
             <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding FactSource}"/>
+
+            <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal">
+                <CheckBox  IsChecked="{Binding ReverseScore}"/>
+                <Label Style="{StaticResource LabelStyle}" VerticalAlignment="Center"
+                       Content="Reverse Scoring (lower values are better)"/>
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1" Margin="0,20,0,0">

@@ -27,6 +27,7 @@ namespace ChoroExplorer.Models {
         public  string                  FactName { get; }
         public  string                  Description { get; }
         public  string                  Source { get; }
+        public  bool                    ReverseScore { get; }
         public  List<FactValue>         RegionFacts { get; }
 
         public FactData() {
@@ -35,17 +36,19 @@ namespace ChoroExplorer.Models {
             FactName = String.Empty;
             Description = String.Empty;
             Source = String.Empty;
+            ReverseScore = false;
             RegionFacts = new List<FactValue>();
         }
 
         [JsonConstructor]
-        public FactData( string factId, string factKey, string factName, string description, string source, 
+        public FactData( string factId, string factKey, string factName, string description, string source, bool reverseScore, 
                          List<FactValue> regionFacts ) {
             FactId = factId;
             FactKey = factKey;
             FactName = factName;
             Description = description;
             Source = source;
+            ReverseScore = reverseScore;
             RegionFacts = regionFacts;
         }
     }

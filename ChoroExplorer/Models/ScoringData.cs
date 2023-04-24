@@ -5,12 +5,14 @@ using System.Windows.Media;
 
 namespace ChoroExplorer.Models {
     internal class FactContext {
-        public  string      FactId { get; }
+        public  FactData    Fact { get; }
         public  double      MinimumFactValue { get; }
         public  double      MaximumFactValue { get; }
 
-        public FactContext( string factId, double minimumFactValue, double maximumFactValue ) {
-            FactId = factId;
+        public  string      FactId => Fact.FactId;
+
+        public FactContext( FactData fact, double minimumFactValue, double maximumFactValue ) {
+            Fact = fact;
             MinimumFactValue = minimumFactValue;
             MaximumFactValue = maximumFactValue;
         }

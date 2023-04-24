@@ -29,8 +29,9 @@ namespace ChoroExplorer.Facts.FactEditor {
 
         public  ObservableCollection<FactValueVm>   FactValues { get; }
 
-        private  string                             mFactKey;
+        private string                              mFactKey;
         private string                              mFactName;
+        public  bool                                ReverseScore { get; set; }
         public  string                              FactDescription { get; set; }
         public  string                              FactSource { get; set; }
 
@@ -40,6 +41,7 @@ namespace ChoroExplorer.Facts.FactEditor {
 
             mFactKey = String.Empty;
             mFactName = String.Empty;
+            ReverseScore = false;
             FactDescription = String.Empty;
             FactSource = String.Empty;
 
@@ -63,6 +65,7 @@ namespace ChoroExplorer.Facts.FactEditor {
             FactName = mFactData.FactName;
             FactDescription = mFactData.Description;
             FactSource = mFactData.Source;
+            ReverseScore = mFactData.ReverseScore;
 
             RaiseAllPropertiesChanged();
         }
@@ -91,7 +94,8 @@ namespace ChoroExplorer.Facts.FactEditor {
 
         protected override DialogParameters CreateClosingParameters() {
             var factValues = FactValues.Select( f => new FactValue( f.RegionId, f.FactValue )).ToList();
-            var factData = new FactData( mFactData.FactId, mFactKey, mFactName, FactDescription, FactSource, factValues );
+            var factData = 
+                new FactData( mFactData.FactId, mFactKey, mFactName, FactDescription, FactSource, ReverseScore, factValues );
 
             return new DialogParameters { { cFactData, factData } };
         }

@@ -162,7 +162,7 @@ namespace ChoroExplorer.Facts {
                     var enabledRegions = 
                         filters.Any() ? SelectEnabledRegions( fact.RegionFacts, filters ).ToList() : fact.RegionFacts;
                     var factContext = 
-                        new FactContext( fact.FactId, enabledRegions.Min( f => f.Value ), enabledRegions.Max( f => f.Value ));
+                        new FactContext( fact, enabledRegions.Min( f => f.Value ), enabledRegions.Max( f => f.Value ));
 
                     foreach( var region in enabledRegions ) {
                         scores.Add( CalculateFactValue( factContext, region ));
@@ -194,7 +194,9 @@ namespace ChoroExplorer.Facts {
 
         private RegionFactScore CalculateFactValue( FactContext context, FactValue value ) {
             var factRange = context.MaximumFactValue - context.MinimumFactValue;
-            var score = ( value.Value - context.MinimumFactValue ) / factRange;
+            var score = context.Fact.ReverseScore ? 
+                    1.0 - (( value.Value - context.MinimumFactValue ) / factRange ) :
+                    ( value.Value - context.MinimumFactValue ) / factRange;
 
             return new RegionFactScore( context.FactId, value.RegionId, score );
         }
