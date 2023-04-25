@@ -13,36 +13,65 @@
 
     <UserControl.Resources>
         <DataTemplate x:Key="FactTemplate" DataType="{x:Type local:FactViewModel}">
-            <Grid x:Name="GroupContainer">
+            <Grid x:Name="GroupContainer" Background="Transparent">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
 
                 <CheckBox Grid.Column="0" IsChecked="{Binding IsEnabled}"/>
 
                 <TextBlock Grid.Column="1" Style="{StaticResource ListViewTextStyle}" VerticalAlignment="Center"
                            Text="{Binding FactKey}"/>
-                <TextBlock Grid.Column="2" Style="{StaticResource ListViewTextStyle}" VerticalAlignment="Center"
-                           Text="{Binding FactName}"/>
 
-                <StackPanel x:Name="GroupControls" Grid.Column="3" Margin="3" Orientation="Horizontal" 
-                            Opacity="0" HorizontalAlignment="Right" VerticalAlignment="Center" ZIndex="10">
-                    <Button Padding="4" BorderThickness="0" Height="25" Width="30" Background="Transparent" Focusable="False"
+                <Grid x:Name="FactData" Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Style="{StaticResource ListViewTextStyle}" VerticalAlignment="Center"
+                               Text="{Binding Weight}" TextAlignment="Left"/>
+                    <TextBlock Grid.Column="1" Style="{StaticResource ListViewTextStyle}" VerticalAlignment="Center"
+                               Text="{Binding FactName}"/>
+                </Grid>
+
+                <Grid x:Name="GroupControls" Grid.Column="2" Opacity="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Height="25" Width="25" BorderThickness="0" Margin="2"
+                            Background="Transparent" Focusable="False" 
+                            Content="{StaticResource Path_Increment}" Command="{Binding IncrementWeight}"/>
+                    <TextBlock Grid.Column="1" Margin="3,0" VerticalAlignment="Center"  TextAlignment="Center"
+                               Style="{StaticResource ListViewTextStyle}" Text="{Binding Weight}"/>
+                    <Button Grid.Column="2" Height="25" Width="25" Padding="6,2" BorderThickness="0" Margin="2"
+                            Background="Transparent" Focusable="False" 
+                            Content="{StaticResource Path_Decrement}" Command="{Binding DecrementWeight}"/>
+
+                    <Button Grid.Column="4" Padding="4" Margin="2" BorderThickness="0" Height="25" Width="30" 
+                            Background="Transparent" Focusable="False"
                             Content="{StaticResource Path_Edit}" ToolTip="Edit Lighting Group" CommandParameter="{Binding}"
                             Command="{Binding DataContext.EditFact, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
-                    <Button Padding="4" BorderThickness="0" Height="25" Width="30" Background="Transparent" Focusable="False"
+                    <Button Grid.Column="5" Padding="4" Margin="2" BorderThickness="0" Height="25" Width="30" 
+                            Background="Transparent" Focusable="False"
                             Content="{StaticResource Path_Delete}" ToolTip="Delete Lighting Group" CommandParameter="{Binding}"
                             Command="{Binding DataContext.DeleteFact, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
-                </StackPanel>
+                </Grid>
 
             </Grid>
 
             <DataTemplate.Triggers>
                 <Trigger SourceName="GroupContainer" Property="IsMouseOver" Value="True">
                     <Setter TargetName="GroupControls" Property="Opacity" Value="0.7"/>
+                    <Setter TargetName="FactData" Property="Opacity" Value="0"/>
                     <Setter TargetName="GroupContainer" Property="Background" Value="{DynamicResource MahApps.Brushes.Accent3}"/>
                 </Trigger>
             </DataTemplate.Triggers>
