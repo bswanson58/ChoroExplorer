@@ -40,6 +40,8 @@ namespace ChoroExplorer.Facts {
 
             mRegionsSelector = mRegionSelectors.RegionsSelector();
             mRegionsSelector.StateChanged += OnRegionsChanged;
+
+            UpdateRegionScores();
         }
 
         public void StopFactEngine() {
