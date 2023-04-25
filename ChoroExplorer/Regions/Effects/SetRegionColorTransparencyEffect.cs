@@ -29,8 +29,10 @@ namespace ChoroExplorer.Regions.Effects {
 
                 foreach( var region in mRegionState.Value.RegionScores ) {
                     regionColors.Add( 
-                        new RegionColor( region.RegionName, 
-                            mColorMapper.MapColor( region.RegionScore, (byte)action.ColorTransparency )));
+                        new RegionColor( region.RegionName,
+                            region.Enabled ?
+                                mColorMapper.MapColor( region.RegionScore, (byte)mRegionState.Value.RegionColorTransparency ) :
+                                mColorMapper.DisabledRegionColor((byte)mRegionState.Value.RegionColorTransparency )));
                 }
 
                 dispatcher.Dispatch( new UpdateRegionColorsAction( regionColors ));
