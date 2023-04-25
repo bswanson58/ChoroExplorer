@@ -20,7 +20,7 @@ namespace ChoroExplorer.Facts.Effects {
         public override Task HandleAsync( AddFactAction action, IDispatcher dispatcher ) {
             try {
                 var setPath = Path.ChangeExtension( 
-                    Path.Combine( mEnvironment.FactsDirectory(), action.Fact.FactId ), ChoroConstants.FactSetExtension );
+                    Path.Combine( mEnvironment.FactsDirectory(), action.Fact.FactId ), ChoroConstants.FactExtension );
 
                 FactLoader.SaveFact( action.Fact, setPath );
             }
