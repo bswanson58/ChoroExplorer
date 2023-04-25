@@ -4,15 +4,31 @@ using System.Diagnostics;
 using System.Windows.Media;
 
 namespace ChoroExplorer.Models {
+    internal class ScoringFact {
+        public  string          FactId { get; }
+        public  int             FactWeight { get; }
+        public  bool            ReverseScore { get; }
+        public  List<FactValue> RegionFacts { get; }
+
+        public ScoringFact( FactData factData, FactParameters parameters ) {
+            FactId = factData.FactId;
+            FactWeight = parameters.Weight;
+            ReverseScore = factData.ReverseScore;
+            RegionFacts = factData.RegionFacts;
+        }
+    }
+
     internal class FactContext {
-        public  FactData    Fact { get; }
+        public  string      FactId { get; }
+        public  int         FactWeight { get; }
+        public  bool        ReverseScore { get; }
         public  double      MinimumFactValue { get; }
         public  double      MaximumFactValue { get; }
 
-        public  string      FactId => Fact.FactId;
-
-        public FactContext( FactData fact, double minimumFactValue, double maximumFactValue ) {
-            Fact = fact;
+        public FactContext( string factId, int factWeight, bool reverseScore, double minimumFactValue, double maximumFactValue ) {
+            FactId = factId;
+            FactWeight = factWeight;
+            ReverseScore = reverseScore;
             MinimumFactValue = minimumFactValue;
             MaximumFactValue = maximumFactValue;
         }
@@ -27,7 +43,7 @@ namespace ChoroExplorer.Models {
         public RegionFactScore( string factId, string regionId, double score ) {
             FactId = factId;
             RegionId = regionId;
-            Score = Math.Max( 0.0, Math.Min( 1.0, score ));
+            Score = score;
             Enabled = true;
         }
 
@@ -48,6 +64,8 @@ namespace ChoroExplorer.Models {
             RegionId = regionId;
             Score = Math.Max( 0.0, Math.Min( 1.0, score ));
             Enabled = enabled;
+
+            Debug.Assert( Score.Equals( score ));
         }
     }
 
@@ -57,7 +75,7 @@ namespace ChoroExplorer.Models {
 
         public FactScore( string factId, double score ) {
             FactId = factId;
-            Score = score;
+            Score = Math.Max( 0.0, Math.Min( 1.0, score ));
         }
     }
 
