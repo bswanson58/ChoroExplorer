@@ -27,6 +27,14 @@ namespace ChoroExplorer.Facts {
         }
     }
 
+    internal class DeleteFactAction {
+        public  FactData    Fact { get; }
+
+        public DeleteFactAction( FactData fact ) {
+            Fact = fact;
+        }
+    }
+
     internal class LoadFactSetsAction { }
 
     internal class AddFactSetAction {
@@ -49,6 +57,14 @@ namespace ChoroExplorer.Facts {
         public  FactSet     FactSet { get; }
 
         public UpdateFactSetAction( FactSet factSet ) {
+            FactSet = factSet;
+        }
+    }
+
+    internal class DeleteFactSetAction {
+        public  FactSet     FactSet { get; }
+
+        public DeleteFactSetAction( FactSet factSet ) {
             FactSet = factSet;
         }
     }

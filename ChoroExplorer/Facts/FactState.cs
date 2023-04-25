@@ -50,6 +50,13 @@ namespace ChoroExplorer.Facts {
             return new( facts, state.Filters, state.FactSets, state.CurrentFactSet );
         }
 
+        [ReducerMethod]
+        public static FactState DeleteFact( FactState state, DeleteFactAction action ) {
+            var facts = state.Facts.Where( f => !f.FactId.Equals( action.Fact.FactId )).ToList();
+
+            return new FactState( facts, state.Filters, state.FactSets, state.CurrentFactSet );
+        }
+
         // Filters
         [ReducerMethod]
         public static FactState AddFilter( FactState state, AddFilterAction action ) =>
@@ -82,6 +89,13 @@ namespace ChoroExplorer.Facts {
                 state.FactSets.Select( f => f.SetId.Equals( action.FactSet.SetId ) ? action.FactSet : f ));
 
             return new( state.Facts, state.Filters, factSets, state.CurrentFactSet );
+        }
+
+        [ReducerMethod]
+        public static FactState DeleteFactSet( FactState state, DeleteFactSetAction action ) {
+            var factSets = state.FactSets.Where( s => !s.SetId.Equals( action.FactSet.SetId )).ToList();
+
+            return new FactState( state.Facts, state.Filters, factSets, state.CurrentFactSet );
         }
 
         [ReducerMethod]

@@ -6,10 +6,12 @@ namespace ChoroExplorer.Facts {
         void    LoadFacts();
         void    AddFact( FactData fact );
         void    UpdateFact( FactData fact );
+        void    DeleteFact( FactData fact );
 
         void    LoadFactSets();
         void    AddFactSet( FactSet factSet );
         void    UpdateFactSet( FactSet factSet );
+        void    DeleteFactSet( FactSet factSet );
 
         void    SetCurrentFactSet( FactSet factSet );
         void    InitializeCurrentFactSet( string factSetId );
@@ -34,6 +36,10 @@ namespace ChoroExplorer.Facts {
             mDispatcher.Dispatch( new UpdateFactAction( fact ));
         }
 
+        public void DeleteFact( FactData fact ) {
+            mDispatcher.Dispatch( new DeleteFactAction( fact ));
+        }
+
         public void LoadFactSets() {
             mDispatcher.Dispatch( new LoadFactSetsAction());
         }
@@ -44,6 +50,10 @@ namespace ChoroExplorer.Facts {
         
         public void UpdateFactSet( FactSet factSet ) {
             mDispatcher.Dispatch( new UpdateFactSetAction( factSet ));
+        } 
+
+        public void DeleteFactSet( FactSet factSet ) {
+            mDispatcher.Dispatch( new DeleteFactSetAction( factSet ));
         } 
 
         public void SetCurrentFactSet( FactSet factSet ) {

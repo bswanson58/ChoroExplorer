@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using ChoroExplorer.Dialogs;
 using ChoroExplorer.Facts.FactEditor;
 using ChoroExplorer.Facts.FactSetEditor;
 using ChoroExplorer.Filters;
@@ -137,6 +138,8 @@ namespace ChoroExplorer.Facts.FactList {
 
                     if( factSet != null ) {
                         mFactsFacade.AddFactSet( factSet );
+
+                        CurrentFactSet = factSet;
                     }
                 }
             });
@@ -159,7 +162,25 @@ namespace ChoroExplorer.Facts.FactList {
         }
 
         private void OnDeleteFactSet() {
-            if( CurrentFactSet != null ) { }
+            if( CurrentFactSet != null ) {
+                var parameters = new DialogParameters{
+                    { ConfirmationDialogViewModel.cTitle, "Confirm Deletion" },
+                    { ConfirmationDialogViewModel.cMessage, $"Do you want to delete fact set '{CurrentFactSet.SetName}'?" }
+                };
+
+                mDialogService.ShowDialog<ConfirmationDialog>( parameters, result => {
+                    if( result.Result.Equals( ButtonResult.Ok )) {
+                        var nextCurrent = FactSets.FirstOrDefault( s => !s.SetId.Equals( CurrentFactSet.SetId ));
+
+                        mFactsFacade.DeleteFactSet( CurrentFactSet );
+
+                        if( nextCurrent != null ) {
+                            CurrentFactSet = nextCurrent;
+                        }
+
+                    }
+                });
+            }
         }
 
         private void OnFactSetsChanged( object ? sender, EventArgs e ) {
@@ -217,7 +238,18 @@ namespace ChoroExplorer.Facts.FactList {
         }
 
         private void OnDeleteFact( FactViewModel ? fact ) {
-            if( fact != null ) { }
+            if( fact != null ) {
+                var parameters = new DialogParameters{
+                    { ConfirmationDialogViewModel.cTitle, "Confirm Deletion" },
+                    { ConfirmationDialogViewModel.cMessage, $"Do you want to delete fact '{fact.FactName}'?" }
+                };
+
+                mDialogService.ShowDialog<ConfirmationDialog>( parameters, result => {
+                    if( result.Result.Equals( ButtonResult.Ok )) {
+                        mFactsFacade.DeleteFact( fact.Data );
+                    }
+                });
+            }
         }
 
         private void OnAddFilter() {
