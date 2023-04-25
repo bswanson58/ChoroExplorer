@@ -26,4 +26,12 @@ namespace ChoroExplorer.Filters {
             Filter = filter;
         }
     }
+
+    internal class DeleteFilterAction {
+        public  FilterData    Filter { get; }
+
+        public DeleteFilterAction( FilterData filter ) {
+            Filter = filter;
+        }
+    }
 }

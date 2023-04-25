@@ -73,6 +73,13 @@ namespace ChoroExplorer.Facts {
 
             return new( state.Facts, filters, state.FactSets, state.CurrentFactSet );
         }
+        
+        [ReducerMethod]
+        public static FactState DeleteFilter( FactState state, DeleteFilterAction action ) {
+            var filters = state.Filters.Where( f => !f.FilterId.Equals( action.Filter.FilterId )).ToList();
+
+            return new FactState( state.Facts, filters, state.FactSets, state.CurrentFactSet );
+        }
 
         // FactSets
         [ReducerMethod]

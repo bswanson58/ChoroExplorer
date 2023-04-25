@@ -291,7 +291,18 @@ namespace ChoroExplorer.Facts.FactList {
         }
 
         private void OnDeleteFilter( FilterViewModel ? filter ) {
-            if( filter != null ) { }
+            if( filter != null ) {
+                var parameters = new DialogParameters{
+                    { ConfirmationDialogViewModel.cTitle, "Confirm Deletion" },
+                    { ConfirmationDialogViewModel.cMessage, $"Do you want to delete filter '{filter.FilterName}'?" }
+                };
+
+                mDialogService.ShowDialog<ConfirmationDialog>( parameters, result => {
+                    if( result.Result.Equals( ButtonResult.Ok )) {
+                        mFilterFacade.DeleteFilter( filter.Data );
+                    }
+                });
+            }
         }
 
         private void LoadFacts() {

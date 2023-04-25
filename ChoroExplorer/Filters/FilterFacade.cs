@@ -6,6 +6,7 @@ namespace ChoroExplorer.Filters {
         void    LoadFilters();
         void    AddFilter( FilterData filter );
         void    UpdateFilter( FilterData filter );
+        void    DeleteFilter( FilterData filter );
     }
 
     internal class FiltersFacade : IFiltersFacade {
@@ -25,6 +26,10 @@ namespace ChoroExplorer.Filters {
 
         public void UpdateFilter( FilterData filter ) {
             mDispatcher.Dispatch( new UpdateFilterAction( filter ));
+        }
+
+        public void DeleteFilter( FilterData filter ) {
+            mDispatcher.Dispatch( new DeleteFilterAction( filter ));
         }
     }
 }
