@@ -262,7 +262,7 @@ namespace ChoroExplorer.Facts.FactList {
 
         private void OnFactParameterChanged( FactViewModel viewModel ) {
             if( CurrentFactSet != null ) {
-                var parameters = Facts.Where( f => f.Parameters.Enabled ).Select( f => f.Parameters );
+                var parameters = Facts.Where( f => !f.Parameters.IsDefault ).Select( f => f.Parameters );
 
                 mFactsFacade.UpdateFactSet( CurrentFactSet.With( parameters ));
             }

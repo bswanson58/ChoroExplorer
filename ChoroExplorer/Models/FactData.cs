@@ -58,6 +58,8 @@ namespace ChoroExplorer.Models {
         public  int                     Weight { get; }
         public  bool                    Enabled { get; }
 
+        public  bool                    IsDefault => Weight.Equals( 1 ) && Enabled.Equals( false );
+
         public FactParameters( FactData forData ) {
             FactId = forData.FactId;
             Weight = 1;
