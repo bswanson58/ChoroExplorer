@@ -160,8 +160,15 @@ namespace ChoroExplorer.Facts {
         private IList<RegionScore> CollateRegionScores( IList<RegionFactScore> scores, int totalWeight ) =>
             scores
                 .GroupBy( s => s.RegionId )
-                .Select( g => new RegionScore( g.Key, g.Sum( v => v.Score ) / totalWeight, g.First().Enabled ))
+                .Select( g => CreateRegionScore( g, totalWeight ))
                 .ToList();
+
+        private RegionScore CreateRegionScore( IGrouping<string, RegionFactScore> group, int totalWeight ) {
+            var totalScore = group.Sum( p => p.Score );
+            var regionScore = totalScore > 0 ? totalScore / totalWeight : 0;
+
+            return new RegionScore( group.Key, regionScore, group.First().Enabled );
+        }
 
         private IList<RegionFactScore> CalculateFactScores( IEnumerable<ScoringFact> facts, IList<FilterValue> filters ) {
             var scores = new List<RegionFactScore>();
@@ -196,11 +203,16 @@ namespace ChoroExplorer.Facts {
 
         private RegionFactScore CalculateFactValue( FactContext context, FactValue value ) {
             var factRange = context.MaximumFactValue - context.MinimumFactValue;
-            var score = context.ReverseScore ? 
+
+            if( factRange > 0 ) {
+                var score = context.ReverseScore ? 
                     1.0 - (( value.Value - context.MinimumFactValue ) / factRange ) :
                     ( value.Value - context.MinimumFactValue ) / factRange;
 
-            return new RegionFactScore( context.FactId, value.RegionId, score * context.FactWeight );
+                return new RegionFactScore( context.FactId, value.RegionId, score * context.FactWeight );
+            }
+
+            return new RegionFactScore( context.FactId, value.RegionId, 0.0D );
         }
 
         public void Dispose() {
