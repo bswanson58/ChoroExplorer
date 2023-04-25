@@ -39,6 +39,7 @@ namespace ChoroExplorer.Facts.FactList {
 
         public  ICommand                                AddFactSet { get; }
         public  ICommand                                EditFactSet { get; }
+        public  ICommand                                DeleteFactSet { get; }
 
         public  ICommand                                AddFact { get; }
         public  DelegateCommand<FactViewModel>          EditFact { get; }
@@ -74,6 +75,7 @@ namespace ChoroExplorer.Facts.FactList {
 
             AddFactSet = new DelegateCommand( OnAddFactSet );
             EditFactSet = new DelegateCommand( OnEditFactSet );
+            DeleteFactSet = new DelegateCommand( OnDeleteFactSet );
 
             LoadFacts();
             LoadFilters();
@@ -156,6 +158,10 @@ namespace ChoroExplorer.Facts.FactList {
             }
         }
 
+        private void OnDeleteFactSet() {
+            if( CurrentFactSet != null ) { }
+        }
+
         private void OnFactSetsChanged( object ? sender, EventArgs e ) {
             LoadFactSets();
         }
@@ -210,7 +216,9 @@ namespace ChoroExplorer.Facts.FactList {
             }
         }
 
-        private void OnDeleteFact( FactViewModel ? factSet ) { }
+        private void OnDeleteFact( FactViewModel ? fact ) {
+            if( fact != null ) { }
+        }
 
         private void OnAddFilter() {
             mDialogService.ShowDialog<FilterEditorView>( result => {
@@ -250,7 +258,9 @@ namespace ChoroExplorer.Facts.FactList {
             }
         }
 
-        private void OnDeleteFilter( FilterViewModel ? filter ) { }
+        private void OnDeleteFilter( FilterViewModel ? filter ) {
+            if( filter != null ) { }
+        }
 
         private void LoadFacts() {
             Facts.Clear();

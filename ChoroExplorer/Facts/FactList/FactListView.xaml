@@ -20,7 +20,7 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Grid.Column="0" IsChecked="{Binding IsEnabled}"/>
+                <CheckBox Grid.Column="0" Margin="0,0,3,0" IsChecked="{Binding IsEnabled}"/>
 
                 <TextBlock Grid.Column="1" Style="{StaticResource ListViewTextStyle}" VerticalAlignment="Center"
                            Text="{Binding FactKey}"/>
@@ -48,21 +48,21 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="0" Height="25" Width="25" BorderThickness="0" Margin="2"
-                            Background="Transparent" Focusable="False" 
+                            Background="Transparent" Focusable="False" ToolTip="Increment Fact Weight"
                             Content="{StaticResource Path_Increment}" Command="{Binding IncrementWeight}"/>
                     <TextBlock Grid.Column="1" Margin="3,0" VerticalAlignment="Center"  TextAlignment="Center"
                                Style="{StaticResource ListViewTextStyle}" Text="{Binding Weight}"/>
                     <Button Grid.Column="2" Height="25" Width="25" Padding="6,2" BorderThickness="0" Margin="2"
-                            Background="Transparent" Focusable="False" 
+                            Background="Transparent" Focusable="False" ToolTip="Decrement Fact Weight"
                             Content="{StaticResource Path_Decrement}" Command="{Binding DecrementWeight}"/>
 
                     <Button Grid.Column="4" Padding="4" Margin="2" BorderThickness="0" Height="25" Width="30" 
                             Background="Transparent" Focusable="False"
-                            Content="{StaticResource Path_Edit}" ToolTip="Edit Lighting Group" CommandParameter="{Binding}"
+                            Content="{StaticResource Path_Edit}" ToolTip="Edit Fact" CommandParameter="{Binding}"
                             Command="{Binding DataContext.EditFact, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                     <Button Grid.Column="5" Padding="4" Margin="2" BorderThickness="0" Height="25" Width="30" 
                             Background="Transparent" Focusable="False"
-                            Content="{StaticResource Path_Delete}" ToolTip="Delete Lighting Group" CommandParameter="{Binding}"
+                            Content="{StaticResource Path_Delete}" ToolTip="Delete Fact" CommandParameter="{Binding}"
                             Command="{Binding DataContext.DeleteFact, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                 </Grid>
 
@@ -86,7 +86,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Grid.Column="0" IsChecked="{Binding IsEnabled}"/>
+                <CheckBox Grid.Column="0" Margin="0,0,3,0" IsChecked="{Binding IsEnabled}"/>
 
                 <TextBlock Grid.Column="1" Style="{StaticResource ListViewTextStyle}" VerticalAlignment="Center"
                            Text="{Binding FilterKey}"/>
@@ -96,10 +96,10 @@
                 <StackPanel x:Name="GroupControls" Grid.Column="3" Margin="3" Orientation="Horizontal" 
                             Opacity="0" HorizontalAlignment="Right" VerticalAlignment="Center" ZIndex="10">
                     <Button Padding="4" BorderThickness="0" Height="25" Width="30" Background="Transparent" Focusable="False"
-                            Content="{StaticResource Path_Edit}" ToolTip="Edit Lighting Group" CommandParameter="{Binding}"
+                            Content="{StaticResource Path_Edit}" ToolTip="Edit Filter" CommandParameter="{Binding}"
                             Command="{Binding DataContext.EditFilter, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                     <Button Padding="4" BorderThickness="0" Height="25" Width="30" Background="Transparent" Focusable="False"
-                            Content="{StaticResource Path_Delete}" ToolTip="Delete Lighting Group" CommandParameter="{Binding}"
+                            Content="{StaticResource Path_Delete}" ToolTip="Delete Filter" CommandParameter="{Binding}"
                             Command="{Binding DataContext.DeleteFilter, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
                 </StackPanel>
 
@@ -133,6 +133,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" Style="{StaticResource LabelStyle}" VerticalAlignment="Center" Content="Fact Set:"/>
@@ -142,6 +143,8 @@
                     Content="{StaticResource Path_Add}" Command="{Binding AddFactSet}" ToolTip="Add a new fact set"/>
             <Button Grid.Column="3" VerticalAlignment="Center" Margin="3,0" Height="26" Padding="4" Opacity="0.7"
                     Content="{StaticResource Path_Edit}" Command="{Binding EditFactSet}" ToolTip="Edit the fact set name"/>
+            <Button Grid.Column="4" VerticalAlignment="Center" Margin="3,0" Height="26" Padding="4" Opacity="0.7"
+                    Content="{StaticResource Path_Delete}" Command="{Binding DeleteFactSet}" ToolTip="Delete this fact set"/>
         </Grid>
 
         <ScrollViewer Grid.Row="2">
