@@ -297,9 +297,11 @@ namespace ChoroExplorer.Facts.FactList {
         private void LoadFacts() {
             Facts.Clear();
 
-            foreach( var fact in mFactState.Value.Facts.OrderBy( p => p.FactName )) {
+            foreach( var fact in mFactState.Value.Facts.OrderBy( p => p.FactKey )) {
                 Facts.Add( new FactViewModel( fact, OnFactParameterChanged ));
             }
+
+            SetFactParameters();
         }
 
         private void OnFactParameterChanged( FactViewModel viewModel ) {
@@ -313,7 +315,7 @@ namespace ChoroExplorer.Facts.FactList {
         private void LoadFilters() {
             Filters.Clear();
 
-            foreach( var filter in mFactState.Value.Filters.OrderBy(  p => p.FilterName )) {
+            foreach( var filter in mFactState.Value.Filters.OrderBy(  p => p.FilterKey )) {
                 Filters.Add( new FilterViewModel( filter, OnFilterParameterChanged ));
             }
         }
