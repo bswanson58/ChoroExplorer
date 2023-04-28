@@ -12,11 +12,13 @@ namespace ChoroExplorer.Models {
     internal interface IMapManager {
         Map     Map { get; }
 
-        void    ConfigureRegionLayers( IEnumerable<RegionShape> regions );
-        void    CenterMap();
+        void    SetMapCenter( int longitude, int latitude );
         void    RefreshMap();
 
+        void    ConfigureRegionLayers( IEnumerable<RegionShape> regions );
         void    UpdateRegionColors( IReadOnlyList<RegionColor> regions );
+
+        string  FindRegionForPosition( Point position );
     }
 
     internal class MapManager : IMapManager {
@@ -26,11 +28,12 @@ namespace ChoroExplorer.Models {
             Map = new Map();
             Map.Layers.Add( OpenStreetMap.CreateTileLayer());
 
-            CenterMap();
+            SetMapCenter( -98, 39 ); // rough center of the contiguous states.
         }
 
-        public void CenterMap() {
-            var center = SphericalMercator.FromLonLat( -98, 39 ); // rough center of the contiguous states.
+        public void SetMapCenter( int longitude, int latitude ) {
+            var center = SphericalMercator.FromLonLat( longitude, latitude );
+
             Map.Home = n => n.NavigateTo( center, Map.Resolutions[5]);
         }
 
@@ -58,6 +61,7 @@ namespace ChoroExplorer.Models {
                 var polyList = new List<Polygon> { polygon };
 
                 retValue.Add( new Layer( regionShape.Name ) {
+                    Tag = polygon,
                     DataSource = new MemoryProvider( polyList ),
                     Style = new VectorStyle {
                         Fill = new Brush( new Color( 0, 0, 0, 16 )),
@@ -86,6 +90,18 @@ namespace ChoroExplorer.Models {
                     layer.DataHasChanged();
                 }
             }
+        }
+
+        public string FindRegionForPosition( Point position ) {
+            foreach( var layer in Map.Layers.Where( l => l.Id > 0 )) {
+                if( layer.Tag is Polygon polygon ) {
+                    if( polygon.Contains( position )) {
+                        return layer.Name;
+                    }
+                }
+            }
+
+            return string.Empty;
         }
     }
 }

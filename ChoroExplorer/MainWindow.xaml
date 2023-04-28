@@ -9,6 +9,7 @@
         xmlns:statusBar="clr-namespace:ChoroExplorer.StatusBar"
         xmlns:mapDisplay="clr-namespace:ChoroExplorer.MapDisplay"
         xmlns:factList="clr-namespace:ChoroExplorer.Facts.FactList"
+        xmlns:regionInfo="clr-namespace:ChoroExplorer.Regions.RegionInfo"
         mc:Ignorable="d"
         Title="ChoroExplorer"
         ResizeMode="CanResizeWithGrip"
@@ -60,7 +61,15 @@
                 </Grid>
             </Grid>
 
-            <factList:FactListView Grid.Column="1"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <factList:FactListView Grid.Row="0"/>
+                <regionInfo:RegionSummaryView Grid.Row="1"/>
+            </Grid>
         </Grid>
 
         <statusBar:StatusView Grid.Row="1"/>

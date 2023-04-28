@@ -7,6 +7,7 @@ namespace ChoroExplorer.Regions {
         void    InitializeRegions();
         void    UpdateRegionScores( IReadOnlyList<RegionSummary> scores );
         void    SetRegionColorTransparency( int transparency );
+        void    SetFocusedRegion( string region );
     }
 
     internal class RegionsFacade : IRegionsFacade {
@@ -26,6 +27,10 @@ namespace ChoroExplorer.Regions {
 
         public void SetRegionColorTransparency( int transparency ) {
             mDispatcher.Dispatch( new SetRegionColorTransparencyAction( transparency ));
+        }
+
+        public void SetFocusedRegion( string region ) {
+            mDispatcher.Dispatch( new SetFocusedRegionAction( region ));
         }
     }
 }

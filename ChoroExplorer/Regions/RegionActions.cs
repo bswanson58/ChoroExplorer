@@ -45,4 +45,12 @@ namespace ChoroExplorer.Regions {
             ColorTransparency = Math.Min( 255, Math.Max( 0, colorTransparency ));
         }
     }
+
+    internal class SetFocusedRegionAction {
+        public  string  FocusedRegion { get; }
+
+        public SetFocusedRegionAction( string focusedRegion ) {
+            FocusedRegion = focusedRegion;
+        }
+    }
 }

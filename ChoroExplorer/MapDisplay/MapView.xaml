@@ -12,6 +12,10 @@
              d:DataContext="{d:DesignInstance local:MapViewModel, IsDesignTimeCreatable=False}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <wpf:MapControl controls:BindableMap.BoundMap="{Binding Map}"/>
+        <wpf:MapControl x:Name="_mapControl" controls:BindableMap.BoundMap="{Binding Map}"/>
+
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,15,15,0" Height="35" Width="35" Padding="0"
+                BorderThickness="0" Background="Transparent" Foreground="DarkSlateGray" Focusable="False" 
+                ToolTip="Center Map" Content="{StaticResource Path_Center}" Command="{Binding CenterMap}"/>
     </Grid>
 </UserControl>
