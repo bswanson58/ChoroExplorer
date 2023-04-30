@@ -64,11 +64,13 @@
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
 
                 <factList:FactListView Grid.Row="0"/>
-                <regionInfo:RegionSummaryView Grid.Row="1"/>
+                <mapDisplay:MapFilterView Grid.Row="1"/>
+                <regionInfo:RegionSummaryView Grid.Row="2"/>
             </Grid>
         </Grid>
 

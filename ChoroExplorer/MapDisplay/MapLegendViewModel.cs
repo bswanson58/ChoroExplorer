@@ -6,6 +6,7 @@ using System.Windows.Media;
 using ChoroExplorer.ColorMapping;
 using ChoroExplorer.Models;
 using ChoroExplorer.Regions;
+using Fluxor;
 using Fluxor.Selectors;
 using ReusableBits.Wpf.Platform;
 
@@ -23,11 +24,16 @@ namespace ChoroExplorer.MapDisplay {
     // ReSharper disable once ClassNeverInstantiated.Global
     internal class MapLegendViewModel : IDisposable {
         private readonly ISelectorSubscription<IReadOnlyList<RegionSummary>>    mRegionSummary;
+        private readonly IState<RegionState>            mRegionState;
+        private readonly IRegionFilter                  mRegionFilter;
 
         public  ObservableCollection<RegionScoreLegend> Regions { get; }
         public  LinearGradientBrush                     LegendBrush { get; }
 
-        public MapLegendViewModel( IColorMapper colorMapper, IRegionSelectors regionSelectors ) {
+        public MapLegendViewModel( IColorMapper colorMapper, IRegionSelectors regionSelectors, 
+                                   IRegionFilter regionFilter, IState<RegionState> regionState ) {
+            mRegionFilter = regionFilter;
+            mRegionState = regionState;
             mRegionSummary = regionSelectors.RegionSummarySelector();
             mRegionSummary.StateChanged += OnRegionSummaryChanged;
 
@@ -38,7 +44,10 @@ namespace ChoroExplorer.MapDisplay {
 
         private void OnRegionSummaryChanged( object ? sender, EventArgs e ) {
             Regions.Clear();
-            Regions.AddRange( mRegionSummary.Value.Where( r => r.Enabled ).Select( r => new RegionScoreLegend( r )));
+            Regions.AddRange( 
+                mRegionFilter
+                    .FilterRegions( mRegionSummary.Value, mRegionState.Value.RegionFilter )
+                    .Select( r => new RegionScoreLegend( r )));
         }
 
         public void Dispose() {

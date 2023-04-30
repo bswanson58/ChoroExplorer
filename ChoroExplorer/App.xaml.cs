@@ -74,6 +74,7 @@ namespace ChoroExplorer {
             services.AddScoped<IFiltersFacade, FiltersFacade>();
             services.AddScoped<IRegionsFacade, RegionsFacade>();
             services.AddScoped<IRegionSelectors, RegionSelectors>();
+            services.AddScoped<IRegionFilter, RegionFilter>();
 
             services.AddScoped<IColorMapper, ColorMapper>();
             services.AddScoped<IFactEngine, FactEngine>();

@@ -8,17 +8,19 @@ namespace ChoroExplorer.Regions.Effects {
     // ReSharper disable once UnusedType.Global
     internal class UpdateRegionScoresEffect : Effect<UpdateRegionScoresAction> {
         private readonly IColorMapper           mColorMapper;
+        private readonly IRegionFilter          mRegionFilter;
         private readonly IState<RegionState>    mRegionState;
 
-        public UpdateRegionScoresEffect( IColorMapper colorMapper, IState<RegionState> regionState ) {
+        public UpdateRegionScoresEffect( IColorMapper colorMapper, IState<RegionState> regionState, IRegionFilter regionFilter ) {
             mColorMapper = colorMapper;
             mRegionState = regionState;
+            mRegionFilter = regionFilter;
         }
 
         public override Task HandleAsync( UpdateRegionScoresAction action, IDispatcher dispatcher ) {
             var regionColors = new List<RegionColor>();
 
-            foreach( var region in action.Scores ) {
+            foreach( var region in mRegionFilter.FilterRegions( action.Scores, mRegionState.Value.RegionFilter )) {
                 regionColors.Add( 
                     new RegionColor( region.RegionName,
                         region.Enabled ?

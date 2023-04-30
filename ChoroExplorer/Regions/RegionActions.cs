@@ -53,4 +53,12 @@ namespace ChoroExplorer.Regions {
             FocusedRegion = focusedRegion;
         }
     }
+
+    internal class SetRegionFilterAction {
+        public  eRegionFilter   Filter { get; }
+
+        public SetRegionFilterAction( eRegionFilter filter ) {
+            Filter = filter;
+        }
+    }
 }

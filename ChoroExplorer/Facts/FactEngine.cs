@@ -21,6 +21,7 @@ namespace ChoroExplorer.Facts {
         private ISelectorSubscription<IReadOnlyList<FilterData>> ?  mFiltersSelector;
         private ISelectorSubscription<IReadOnlyList<FactData>> ?    mFactsSelector;
         private ISelectorSubscription<String> ?                     mCurrentFactsSelector;
+        private ISelectorSubscription<eRegionFilter> ?              mRegionFilter;
 
         public FactEngine( IFactSelectors factSelectors, IRegionSelectors regionSelectors, IRegionsFacade regionsFacade ) {
             mFactSelectors = factSelectors;
@@ -40,6 +41,8 @@ namespace ChoroExplorer.Facts {
 
             mRegionsSelector = mRegionSelectors.RegionsSelector();
             mRegionsSelector.StateChanged += OnRegionsChanged;
+            mRegionFilter = mRegionSelectors.RegionFocusSelector();
+            mRegionFilter.StateChanged += OnRegionFilterChanged;
 
             UpdateRegionScores();
         }
@@ -63,6 +66,10 @@ namespace ChoroExplorer.Facts {
         }
 
         private void OnRegionsChanged( object ? sender, EventArgs e ) {
+            UpdateRegionScores();
+        }
+
+        private void OnRegionFilterChanged( object ? sender, EventArgs e ) {
             UpdateRegionScores();
         }
 
@@ -217,6 +224,7 @@ namespace ChoroExplorer.Facts {
 
         public void Dispose() {
             mRegionsSelector?.Dispose();
+            mRegionFilter?.Dispose();
             mFactSetsSelector?.Dispose();
             mFactsSelector?.Dispose();
             mCurrentFactsSelector?.Dispose();

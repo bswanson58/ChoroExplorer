@@ -56,7 +56,8 @@ namespace ChoroExplorer.Regions.RegionInfo {
 
         private void UpdateRegionSummary() {
             if(!String.IsNullOrWhiteSpace( mFocusedRegionSelector.Value )) {
-                var scoreSortedRegions = mRegionSummarySelector.Value.OrderByDescending( r => r.RegionScore ).ToList();
+                var scoreSortedRegions = 
+                    mRegionSummarySelector.Value.Where( r => r.Enabled ).OrderByDescending( r => r.RegionScore ).ToList();
                 var regionSummary = 
                     mRegionSummarySelector.Value.FirstOrDefault( r => r.RegionName.Equals( mFocusedRegionSelector.Value ));
 

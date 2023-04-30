@@ -8,6 +8,7 @@ namespace ChoroExplorer.Regions {
         void    UpdateRegionScores( IReadOnlyList<RegionSummary> scores );
         void    SetRegionColorTransparency( int transparency );
         void    SetFocusedRegion( string region );
+        void    SetRegionFilter( eRegionFilter filter );
     }
 
     internal class RegionsFacade : IRegionsFacade {
@@ -31,6 +32,10 @@ namespace ChoroExplorer.Regions {
 
         public void SetFocusedRegion( string region ) {
             mDispatcher.Dispatch( new SetFocusedRegionAction( region ));
+        }
+
+        public void SetRegionFilter( eRegionFilter filter ) {
+            mDispatcher.Dispatch( new SetRegionFilterAction( filter ));
         }
     }
 }

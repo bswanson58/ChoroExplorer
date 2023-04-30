@@ -7,6 +7,9 @@ using Mapsui.Utilities;
 using Mapsui;
 using System.Collections.Generic;
 using System.Linq;
+using Brush = Mapsui.Styles.Brush;
+using Color = Mapsui.Styles.Color;
+using Pen = Mapsui.Styles.Pen;
 
 namespace ChoroExplorer.Models {
     internal interface IMapManager {
@@ -79,16 +82,27 @@ namespace ChoroExplorer.Models {
         }
 
         public void UpdateRegionColors( IReadOnlyList<RegionColor> regions ) {
-            foreach( var region in regions ) {
-                var layer = Map.Layers.FindLayer( region.RegionName ).FirstOrDefault();
+            foreach( var layer in Map.Layers.Where( l => l.Id > 0 )) {
+                var region = regions.FirstOrDefault( r => r.RegionName.Equals( layer.Name ));
 
-                if( layer?.Style is VectorStyle style ) {
+                if( region != null ) {
                     var mapColor = new Color( region.Color.R, region.Color.G, region.Color.B, region.Color.A );
 
-                    style.Fill = new Brush( mapColor );
-
-                    layer.DataHasChanged();
+                    layer.Style = new VectorStyle {
+                        Fill = new Brush( mapColor ),
+                        Outline = new Pen {
+                            Color = Color.Orange,
+                            Width = 1,
+                            PenStyle = PenStyle.Solid,
+                            PenStrokeCap = PenStrokeCap.Round
+                        }
+                    };
                 }
+                else {
+                    layer.Style = null;
+                }
+
+                layer.DataHasChanged();
             }
         }
 
