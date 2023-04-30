@@ -8,6 +8,7 @@ using ChoroExplorer.Models;
 using ChoroExplorer.Regions;
 using Fluxor;
 using Fluxor.Selectors;
+using ReusableBits.Wpf.Commands;
 using ReusableBits.Wpf.Platform;
 
 namespace ChoroExplorer.MapDisplay {
@@ -25,19 +26,24 @@ namespace ChoroExplorer.MapDisplay {
     internal class MapLegendViewModel : IDisposable {
         private readonly ISelectorSubscription<IReadOnlyList<RegionSummary>>    mRegionSummary;
         private readonly IState<RegionState>            mRegionState;
+        private readonly IRegionsFacade                 mRegionFacade;
         private readonly IRegionFilter                  mRegionFilter;
 
         public  ObservableCollection<RegionScoreLegend> Regions { get; }
         public  LinearGradientBrush                     LegendBrush { get; }
 
-        public MapLegendViewModel( IColorMapper colorMapper, IRegionSelectors regionSelectors, 
+        public  DelegateCommand<RegionScoreLegend>      LegendFocus { get; }
+
+        public MapLegendViewModel( IColorMapper colorMapper, IRegionSelectors regionSelectors, IRegionsFacade regionFacade,
                                    IRegionFilter regionFilter, IState<RegionState> regionState ) {
             mRegionFilter = regionFilter;
             mRegionState = regionState;
+            mRegionFacade = regionFacade;
             mRegionSummary = regionSelectors.RegionSummarySelector();
             mRegionSummary.StateChanged += OnRegionSummaryChanged;
 
             Regions = new ObservableCollection<RegionScoreLegend>();
+            LegendFocus = new DelegateCommand<RegionScoreLegend>( OnLegendFocus );
 
             LegendBrush = new LinearGradientBrush { GradientStops = colorMapper.MappingColors };
         }
@@ -48,6 +54,12 @@ namespace ChoroExplorer.MapDisplay {
                 mRegionFilter
                     .FilterRegions( mRegionSummary.Value, mRegionState.Value.RegionFilter )
                     .Select( r => new RegionScoreLegend( r )));
+        }
+
+        private void OnLegendFocus( RegionScoreLegend ? region ) {
+            if( region != null ) {
+                mRegionFacade.SetFocusedRegion( region.RegionName );
+            }
         }
 
         public void Dispose() {

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChoroExplorer.MapDisplay"
              xmlns:viewModelLocator="clr-namespace:ReusableBits.Wpf.ViewModelLocator;assembly=ReusableBits.Wpf"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              viewModelLocator:ViewModelLocator.AutoWireViewModel="True"
              d:DataContext="{d:DesignInstance local:MapLegendViewModel, IsDesignTimeCreatable=False}"
              mc:Ignorable="d" 
@@ -13,7 +14,15 @@
     <UserControl.Resources>
         <DataTemplate x:Key="RegionLegend" DataType="{x:Type local:RegionScoreLegend}">
             <Line  X1="{Binding RegionScore}" Y1="1" X2="{Binding RegionScore}" Y2="19"
-                   StrokeThickness="3" Stroke="DarkSlateBlue" ToolTip="{Binding RegionName}"/>
+                   StrokeThickness="3" Stroke="DarkSlateBlue" ToolTip="{Binding RegionName}">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="MouseEnter">
+                        <b:InvokeCommandAction 
+                            Command="{Binding DataContext.LegendFocus, RelativeSource={RelativeSource AncestorType=local:MapLegendView}}"
+                            CommandParameter="{Binding}"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </Line>
         </DataTemplate>
     </UserControl.Resources>
 
