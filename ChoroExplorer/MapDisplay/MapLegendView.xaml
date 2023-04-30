@@ -10,6 +10,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="200">
 
+    <UserControl.Resources>
+        <DataTemplate x:Key="RegionLegend" DataType="{x:Type local:RegionScoreLegend}">
+            <Line  X1="{Binding RegionScore}" Y1="1" X2="{Binding RegionScore}" Y2="19"
+                   StrokeThickness="3" Stroke="DarkSlateBlue" ToolTip="{Binding RegionName}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Grid Margin="5,3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -17,6 +24,16 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Column="0" Style="{StaticResource LabelStyle}" VerticalAlignment="Center" Content="Regions:"/>
+
         <Rectangle Grid.Column="1" Margin="0,3" Fill="{Binding LegendBrush}"/>
+        <Viewbox Grid.Column="1" Margin="0,3" Stretch="Fill">
+            <ItemsControl Height="20" Width="1000" ItemsSource="{Binding Regions}" ItemTemplate="{StaticResource RegionLegend}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Viewbox>
     </Grid>
 </UserControl>
